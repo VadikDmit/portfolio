@@ -1,0 +1,233 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { getAdjacentProject, getProjectBySlug, projects } from "@/lib/projects";
+import PlaceholderImage from "@/components/PlaceholderImage";
+
+export function generateStaticParams() {
+  return projects.map((project) => ({ slug: project.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const project = getProjectBySlug(slug);
+  if (!project) return {};
+
+  return {
+    title: project.title,
+    description: project.description,
+  };
+}
+
+export default async function ProjectPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const project = getProjectBySlug(slug);
+  if (!project) notFound();
+
+  const next = getAdjacentProject(slug);
+
+  return (
+    <article>
+      {/* 01. Hero */}
+      <section
+        style={{
+          paddingTop: 140,
+          paddingBottom: 60,
+          paddingLeft: "var(--page-margin)",
+          paddingRight: "var(--page-margin)",
+          maxWidth: "var(--max-width)",
+          margin: "0 auto",
+        }}
+      >
+        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2 mb-6">
+          <span
+            className="text-[13px] tabular-nums"
+            style={{ color: "var(--color-fg-secondary)" }}
+          >
+            {project.number}
+          </span>
+          <span
+            className="text-[13px]"
+            style={{ color: "var(--color-fg-secondary)" }}
+          >
+            {project.category}
+          </span>
+          <span
+            className="text-[13px] tabular-nums"
+            style={{ color: "var(--color-fg-tertiary)" }}
+          >
+            {project.year}
+          </span>
+        </div>
+
+        <h1 className="text-[clamp(2.75rem,8vw,6rem)] leading-[0.95] font-medium tracking-tight mb-10">
+          {project.title}
+        </h1>
+
+        <p className="max-w-2xl text-[clamp(1.05rem,2vw,1.35rem)]" style={{ color: "var(--color-fg-secondary)" }}>
+          {project.description}
+        </p>
+
+        <div className="mt-14 aspect-[16/9] w-full overflow-hidden rounded-sm">
+          <PlaceholderImage tone={project.tone} label={project.title} />
+        </div>
+      </section>
+
+      {/* 02. About + 03. Role */}
+      <section
+        style={{
+          paddingTop: 60,
+          paddingBottom: 60,
+          paddingLeft: "var(--page-margin)",
+          paddingRight: "var(--page-margin)",
+          maxWidth: "var(--max-width)",
+          margin: "0 auto",
+        }}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
+          <div className="md:col-span-7">
+            <h2
+              className="text-[13px] tracking-wide uppercase mb-6"
+              style={{ color: "var(--color-fg-tertiary)" }}
+            >
+              About the project
+            </h2>
+            <p className="text-[clamp(1.1rem,2vw,1.5rem)] leading-relaxed">
+              {project.about}
+            </p>
+          </div>
+
+          <div className="md:col-span-5">
+            <h2
+              className="text-[13px] tracking-wide uppercase mb-6"
+              style={{ color: "var(--color-fg-tertiary)" }}
+            >
+              My role
+            </h2>
+            <ul className="space-y-3">
+              {project.role.map((item) => (
+                <li key={item} className="text-[15px]">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* 04. Process */}
+      <section
+        style={{
+          paddingTop: 60,
+          paddingBottom: 80,
+          paddingLeft: "var(--page-margin)",
+          paddingRight: "var(--page-margin)",
+          maxWidth: "var(--max-width)",
+          margin: "0 auto",
+        }}
+      >
+        <h2
+          className="text-[13px] tracking-wide uppercase mb-10"
+          style={{ color: "var(--color-fg-tertiary)" }}
+        >
+          Process
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10">
+          {project.process.map((step, index) => (
+            <div key={step.title} className="border-t pt-5" style={{ borderColor: "var(--color-border)" }}>
+              <span
+                className="text-[13px] tabular-nums"
+                style={{ color: "var(--color-fg-secondary)" }}
+              >
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <h3 className="mt-2 text-[19px] font-medium">{step.title}</h3>
+              <p className="mt-2 text-[14px]" style={{ color: "var(--color-fg-secondary)" }}>
+                {step.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 05. Design */}
+      <section
+        style={{
+          paddingBottom: 80,
+          paddingLeft: "var(--page-margin)",
+          paddingRight: "var(--page-margin)",
+          maxWidth: "var(--max-width)",
+          margin: "0 auto",
+        }}
+      >
+        <div className="flex flex-col gap-6">
+          <div className="aspect-[16/10] w-full overflow-hidden rounded-sm">
+            <PlaceholderImage tone={(project.tone + 1) % 6} label={`${project.title} — desktop`} />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="aspect-[3/4] overflow-hidden rounded-sm">
+              <PlaceholderImage tone={(project.tone + 2) % 6} label={`${project.title} — mobile`} />
+            </div>
+            <div className="aspect-[3/4] overflow-hidden rounded-sm">
+              <PlaceholderImage tone={(project.tone + 3) % 6} label={`${project.title} — UI detail`} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 06. Result */}
+      <section
+        style={{
+          paddingBottom: 100,
+          paddingLeft: "var(--page-margin)",
+          paddingRight: "var(--page-margin)",
+          maxWidth: "var(--max-width)",
+          margin: "0 auto",
+        }}
+      >
+        <h2
+          className="text-[13px] tracking-wide uppercase mb-6"
+          style={{ color: "var(--color-fg-tertiary)" }}
+        >
+          Result
+        </h2>
+        <p className="max-w-2xl text-[clamp(1.1rem,2vw,1.5rem)] leading-relaxed">
+          {project.result}
+        </p>
+      </section>
+
+      {/* 07. Next project */}
+      <Link
+        href={`/projects/${next.slug}`}
+        data-cursor="hover"
+        className="group block border-t"
+        style={{ borderColor: "var(--color-border)" }}
+      >
+        <div
+          className="flex flex-col items-start gap-3 py-16 md:py-24"
+          style={{
+            paddingLeft: "var(--page-margin)",
+            paddingRight: "var(--page-margin)",
+            maxWidth: "var(--max-width)",
+            margin: "0 auto",
+          }}
+        >
+          <span className="text-[13px]" style={{ color: "var(--color-fg-secondary)" }}>
+            Next project
+          </span>
+          <span className="text-[clamp(2rem,6vw,4.5rem)] leading-none font-medium tracking-tight transition-transform duration-500 group-hover:translate-x-3">
+            {next.title} →
+          </span>
+        </div>
+      </Link>
+    </article>
+  );
+}
