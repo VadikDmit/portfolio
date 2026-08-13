@@ -62,7 +62,7 @@ export default function HomeProjectsList({ projects }: { projects: Project[] }) 
 
                   {/* Mobile-only inline thumbnail, no hover dependency */}
                   <span className="sm:hidden shrink-0 w-16 h-20 overflow-hidden rounded-sm">
-                    <PlaceholderImage tone={project.tone} label={project.title} />
+                    <PlaceholderImage tone={project.tone} label={project.title} src={project.cover || undefined} />
                   </span>
                 </span>
 
@@ -99,7 +99,7 @@ export default function HomeProjectsList({ projects }: { projects: Project[] }) 
                 transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                 className="w-full h-full"
               >
-                <PlaceholderImage tone={hovered.tone} label={hovered.title} />
+                <PlaceholderImage tone={hovered.tone} label={hovered.title} src={hovered.cover || undefined} />
               </motion.div>
             )}
           </AnimatePresence>

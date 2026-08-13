@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const GRADIENTS = [
   "linear-gradient(135deg, #dcdcd6 0%, #b8b8b0 100%)",
   "linear-gradient(135deg, #d6d2c4 0%, #a8a190 100%)",
@@ -11,13 +13,32 @@ type PlaceholderImageProps = {
   tone: number;
   label?: string;
   className?: string;
+  src?: string;
 };
 
 export default function PlaceholderImage({
   tone,
   label,
   className,
+  src,
 }: PlaceholderImageProps) {
+  if (src) {
+    return (
+      <div
+        className={className}
+        style={{ width: "100%", height: "100%", position: "relative", overflow: "hidden" }}
+      >
+        <Image
+          src={src}
+          alt={label ?? ""}
+          fill
+          sizes="(max-width: 768px) 50vw, 400px"
+          className="object-cover"
+        />
+      </div>
+    );
+  }
+
   const gradient = GRADIENTS[tone % GRADIENTS.length];
 
   return (
