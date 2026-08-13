@@ -42,7 +42,7 @@ export default function HomeProjectsList({ projects }: { projects: Project[] }) 
                     {project.number}
                   </span>
                   <span
-                    className="text-[clamp(1.5rem,4vw,3rem)] leading-none font-medium tracking-tight transition-transform duration-500"
+                    className="text-[clamp(1.25rem,3.2vw,2.5rem)] leading-none font-medium tracking-tight transition-transform duration-500"
                     style={{
                       transform: isHovered ? "translateX(8px)" : "translateX(0)",
                     }}

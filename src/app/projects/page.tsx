@@ -53,7 +53,7 @@ export default function ProjectsPage() {
                 >
                   {project.number}
                 </span>
-                <h2 className="mt-3 text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.02] font-medium tracking-tight transition-transform duration-500 group-hover:translate-x-2">
+                <h2 className="mt-3 text-[clamp(1.75rem,3.6vw,3rem)] leading-[1.02] font-medium tracking-tight transition-transform duration-500 group-hover:translate-x-2">
                   {project.title}
                 </h2>
                 <p

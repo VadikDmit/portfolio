@@ -68,7 +68,7 @@ export default async function ProjectPage({
           </span>
         </div>
 
-        <h1 className="text-[clamp(2.75rem,8vw,6rem)] leading-[0.95] font-medium tracking-tight mb-10">
+        <h1 className="text-[clamp(2.25rem,6vw,4.75rem)] leading-[0.98] font-medium tracking-tight mb-10">
           {project.title}
         </h1>
 

@@ -16,10 +16,8 @@ export default function Home() {
     >
       <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
         <div className="md:col-span-5 md:sticky md:top-32 self-start">
-          <h1 className="text-[clamp(2.75rem,7vw,5.5rem)] leading-[0.95] font-medium tracking-tight">
-            Вадим
-            <br />
-            Дмитриев
+          <h1 className="text-[clamp(2rem,4vw,3.25rem)] leading-[1.05] font-medium tracking-tight lg:whitespace-nowrap">
+            Вадим Дмитриев
           </h1>
           <p
             className="mt-6 text-[clamp(1.1rem,2vw,1.5rem)] leading-snug"
