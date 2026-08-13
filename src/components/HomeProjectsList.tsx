@@ -7,11 +7,21 @@ import type { Project } from "@/lib/projects";
 import { useMediaQuery } from "@/lib/useMediaQuery";
 import PlaceholderImage from "./PlaceholderImage";
 
+const PREVIEW_WIDTH = 280;
+const PREVIEW_HEIGHT = 320;
+
 export default function HomeProjectsList({ projects }: { projects: Project[] }) {
   const [hovered, setHovered] = useState<Project | null>(null);
+  const [previewY, setPreviewY] = useState(0);
   const showFloatingPreview = useMediaQuery(
     "(hover: hover) and (pointer: fine) and (min-width: 1024px)"
   );
+
+  const handleRowEnter = (project: Project, e: React.MouseEvent<HTMLAnchorElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setPreviewY(rect.top + rect.height / 2 - PREVIEW_HEIGHT / 2);
+    setHovered(project);
+  };
 
   return (
     <div>
@@ -29,7 +39,7 @@ export default function HomeProjectsList({ projects }: { projects: Project[] }) 
               <Link
                 href={`/projects/${project.slug}`}
                 data-cursor="hover"
-                onMouseEnter={() => setHovered(project)}
+                onMouseEnter={(e) => handleRowEnter(project, e)}
                 onMouseLeave={() => setHovered(null)}
                 className="group flex items-center justify-between gap-6 py-6 sm:py-7 transition-opacity duration-300"
                 style={{ opacity: isDimmed ? 0.35 : 1 }}
@@ -71,12 +81,12 @@ export default function HomeProjectsList({ projects }: { projects: Project[] }) 
       {showFloatingPreview && (
         <div
           aria-hidden
-          className="pointer-events-none fixed top-1/2 z-40 overflow-hidden rounded-sm"
+          className="pointer-events-none fixed top-0 z-40 overflow-hidden rounded-sm transition-transform duration-500 ease-out"
           style={{
             right: "var(--page-margin)",
-            translate: "0 -50%",
-            width: 300,
-            height: 380,
+            width: PREVIEW_WIDTH,
+            height: PREVIEW_HEIGHT,
+            transform: `translateY(${previewY}px)`,
           }}
         >
           <AnimatePresence>
