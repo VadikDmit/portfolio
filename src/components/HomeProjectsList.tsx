@@ -46,12 +46,6 @@ export default function HomeProjectsList({ projects }: { projects: Project[] }) 
               >
                 <span className="flex items-baseline gap-4 sm:gap-6 min-w-0">
                   <span
-                    className="text-[13px] tabular-nums shrink-0"
-                    style={{ color: "var(--color-fg-secondary)" }}
-                  >
-                    {project.number}
-                  </span>
-                  <span
                     className="text-[clamp(1.25rem,3.2vw,2.5rem)] leading-none font-medium tracking-tight transition-transform duration-500"
                     style={{
                       transform: isHovered ? "translateX(8px)" : "translateX(0)",
