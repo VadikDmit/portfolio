@@ -200,7 +200,7 @@ export default async function ProjectPage({
               {project.processParagraphs.map((paragraph, index) => (
                 <div
                   key={index}
-                  className="border-t py-6 first:pt-0"
+                  className="border-t py-10"
                   style={{ borderColor: "var(--color-border)" }}
                 >
                   <p className="text-[15px] leading-relaxed">{paragraph}</p>
