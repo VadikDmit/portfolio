@@ -47,38 +47,46 @@ export default async function ProjectPage({
           margin: "0 auto",
         }}
       >
-        <div className="aspect-[16/9] w-full overflow-hidden rounded-sm mb-12 md:mb-16">
+        <div className="relative aspect-[4/5] sm:aspect-[16/9] w-full overflow-hidden rounded-sm">
           <PlaceholderImage tone={project.tone} label={project.title} src={project.cover || undefined} />
+
+          <div
+            aria-hidden
+            className="absolute inset-x-0 bottom-0 h-2/3 pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0))",
+            }}
+          />
+
+          <div className="absolute left-6 right-6 bottom-6 sm:left-10 sm:right-10 sm:bottom-10 lg:left-[60px] lg:right-[60px] lg:bottom-[60px]">
+            <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2 mb-6">
+              <span
+                className="text-[13px]"
+                style={{ color: "rgba(255,255,255,0.8)" }}
+              >
+                {project.category}
+              </span>
+              <span
+                className="text-[13px] tabular-nums"
+                style={{ color: "rgba(255,255,255,0.55)" }}
+              >
+                {project.year}
+              </span>
+            </div>
+
+            <h1 className="text-[clamp(2.25rem,6vw,4.75rem)] leading-[0.98] font-medium tracking-tight mb-6 text-white">
+              {project.title}
+            </h1>
+
+            <p
+              className="max-w-2xl text-[clamp(1.05rem,2vw,1.35rem)]"
+              style={{ color: "rgba(255,255,255,0.85)" }}
+            >
+              {project.description}
+            </p>
+          </div>
         </div>
-
-        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2 mb-6">
-          <span
-            className="text-[13px] tabular-nums"
-            style={{ color: "var(--color-fg-secondary)" }}
-          >
-            {project.number}
-          </span>
-          <span
-            className="text-[13px]"
-            style={{ color: "var(--color-fg-secondary)" }}
-          >
-            {project.category}
-          </span>
-          <span
-            className="text-[13px] tabular-nums"
-            style={{ color: "var(--color-fg-tertiary)" }}
-          >
-            {project.year}
-          </span>
-        </div>
-
-        <h1 className="text-[clamp(2.25rem,6vw,4.75rem)] leading-[0.98] font-medium tracking-tight mb-10">
-          {project.title}
-        </h1>
-
-        <p className="max-w-2xl text-[clamp(1.05rem,2vw,1.35rem)]" style={{ color: "var(--color-fg-secondary)" }}>
-          {project.description}
-        </p>
       </section>
 
       {/* 02. About + 03. Role */}
