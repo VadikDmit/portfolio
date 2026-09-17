@@ -100,9 +100,16 @@ export default async function ProjectPage({
             >
               About the project
             </h2>
-            <p className="text-[clamp(1.1rem,2vw,1.5rem)] leading-relaxed">
-              {project.about}
-            </p>
+            <div className="space-y-4">
+              {project.about.map((paragraph, index) => (
+                <p
+                  key={index}
+                  className="text-[clamp(1.1rem,2vw,1.5rem)] leading-relaxed"
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
           </div>
 
           <div className="md:col-span-5">
@@ -122,6 +129,44 @@ export default async function ProjectPage({
           </div>
         </div>
       </section>
+
+      {/* 03b. Users (only for projects with more than one audience) */}
+      {project.audiences && (
+        <section
+          style={{
+            paddingTop: 20,
+            paddingBottom: 60,
+            paddingLeft: "var(--page-margin)",
+            paddingRight: "var(--page-margin)",
+            maxWidth: "var(--max-width)",
+            margin: "0 auto",
+          }}
+        >
+          <h2
+            className="text-[13px] tracking-wide uppercase mb-10"
+            style={{ color: "var(--color-fg-tertiary)" }}
+          >
+            Users
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-10">
+            {project.audiences.map((audience) => (
+              <div
+                key={audience.title}
+                className="border-t pt-5"
+                style={{ borderColor: "var(--color-border)" }}
+              >
+                <h3 className="text-[19px] font-medium">{audience.title}</h3>
+                <p
+                  className="mt-2 text-[14px]"
+                  style={{ color: "var(--color-fg-secondary)" }}
+                >
+                  {audience.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* 04. Process */}
       <section
