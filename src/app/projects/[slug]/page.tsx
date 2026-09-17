@@ -47,7 +47,7 @@ export default async function ProjectPage({
           margin: "0 auto",
         }}
       >
-        <div className="relative aspect-[4/5] sm:aspect-[16/9] w-full overflow-hidden rounded-sm">
+        <div className="relative aspect-[4/5] sm:aspect-[16/9] w-full overflow-hidden rounded-[24px]">
           <PlaceholderImage tone={project.tone} label={project.title} src={project.cover || undefined} />
 
           <div
@@ -222,14 +222,14 @@ export default async function ProjectPage({
         }}
       >
         <div className="flex flex-col gap-6">
-          <div className="aspect-[16/10] w-full overflow-hidden rounded-sm">
+          <div className="aspect-[16/10] w-full overflow-hidden rounded-[24px]">
             <PlaceholderImage tone={(project.tone + 1) % 6} label={`${project.title} — desktop`} />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="aspect-[3/4] overflow-hidden rounded-sm">
+            <div className="aspect-[3/4] overflow-hidden rounded-[24px]">
               <PlaceholderImage tone={(project.tone + 2) % 6} label={`${project.title} — mobile`} />
             </div>
-            <div className="aspect-[3/4] overflow-hidden rounded-sm">
+            <div className="aspect-[3/4] overflow-hidden rounded-[24px]">
               <PlaceholderImage tone={(project.tone + 3) % 6} label={`${project.title} — UI detail`} />
             </div>
           </div>

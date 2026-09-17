@@ -37,7 +37,7 @@ export default function ProjectsPage() {
               style={{ borderColor: "var(--color-border)" }}
             >
               <div
-                className={`aspect-[4/3] overflow-hidden rounded-sm ${
+                className={`aspect-[4/3] overflow-hidden rounded-[24px] ${
                   reversed ? "md:order-2" : ""
                 }`}
               >

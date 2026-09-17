@@ -55,7 +55,7 @@ export default function HomeProjectsList({ projects }: { projects: Project[] }) 
                   </span>
 
                   {/* Mobile-only inline thumbnail, no hover dependency */}
-                  <span className="sm:hidden shrink-0 w-16 h-20 overflow-hidden rounded-sm">
+                  <span className="sm:hidden shrink-0 w-16 h-20 overflow-hidden rounded-[24px]">
                     <PlaceholderImage tone={project.tone} label={project.title} src={project.cover || undefined} />
                   </span>
                 </span>
@@ -75,7 +75,7 @@ export default function HomeProjectsList({ projects }: { projects: Project[] }) 
       {showFloatingPreview && (
         <div
           aria-hidden
-          className="pointer-events-none fixed top-0 z-40 overflow-hidden rounded-sm transition-transform duration-500 ease-out"
+          className="pointer-events-none fixed top-0 z-40 overflow-hidden rounded-[24px] transition-transform duration-500 ease-out"
           style={{
             right: "var(--page-margin)",
             width: PREVIEW_WIDTH,
