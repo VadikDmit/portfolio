@@ -40,6 +40,20 @@ export const metadata: Metadata = {
     title,
     description,
   },
+  icons: {
+    icon: [
+      {
+        url: "/favicon-dark.svg",
+        media: "(prefers-color-scheme: light)",
+        type: "image/svg+xml",
+      },
+      {
+        url: "/favicon-light.svg",
+        media: "(prefers-color-scheme: dark)",
+        type: "image/svg+xml",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
