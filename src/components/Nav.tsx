@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
@@ -25,10 +26,10 @@ export default function Nav() {
       >
         <Link
           href="/"
-          className="pointer-events-auto text-[13px] tracking-wide"
-          style={{ color: "var(--color-fg)" }}
+          aria-label="Вадим Дмитриев — на главную"
+          className="pointer-events-auto transition-opacity duration-300 hover:opacity-70"
         >
-          Вадим Дмитриев
+          <Image src="/logo.svg" alt="Вадим Дмитриев" width={102} height={22} priority />
         </Link>
 
         <nav
