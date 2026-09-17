@@ -193,22 +193,47 @@ export default async function ProjectPage({
         >
           Process
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10">
-          {project.process.map((step, index) => (
-            <div key={step.title} className="border-t pt-5" style={{ borderColor: "var(--color-border)" }}>
-              <span
-                className="text-[13px] tabular-nums"
-                style={{ color: "var(--color-fg-secondary)" }}
-              >
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <h3 className="mt-2 text-[19px] font-medium">{step.title}</h3>
-              <p className="mt-2 text-[14px]" style={{ color: "var(--color-fg-secondary)" }}>
-                {step.description}
-              </p>
+
+        {project.processParagraphs ? (
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
+            <div className="md:col-span-7">
+              {project.processParagraphs.map((paragraph, index) => (
+                <div
+                  key={index}
+                  className="border-t py-6 first:pt-0"
+                  style={{ borderColor: "var(--color-border)" }}
+                >
+                  <p className="text-[15px] leading-relaxed">{paragraph}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+            <div className="md:col-span-5">
+              <div className="aspect-square w-full overflow-hidden rounded-[24px] md:sticky md:top-32">
+                <PlaceholderImage
+                  tone={(project.tone + 1) % 6}
+                  label={`${project.title} — process`}
+                />
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10">
+            {project.process.map((step, index) => (
+              <div key={step.title} className="border-t pt-5" style={{ borderColor: "var(--color-border)" }}>
+                <span
+                  className="text-[13px] tabular-nums"
+                  style={{ color: "var(--color-fg-secondary)" }}
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-2 text-[19px] font-medium">{step.title}</h3>
+                <p className="mt-2 text-[14px]" style={{ color: "var(--color-fg-secondary)" }}>
+                  {step.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* 05. Design */}
