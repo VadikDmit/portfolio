@@ -24,6 +24,8 @@ export type Project = {
   process: ProcessStep[];
   /** Optional — alternative Process layout: titled paragraphs beside a square media block. Takes over from `process` when set. */
   processParagraphs?: ProcessStep[];
+  /** Optional — set true to skip the generic 3-image Design section. */
+  hideDesignSection?: boolean;
   result: string;
   /** Index used to derive a placeholder gradient when no real image exists yet. */
   tone: number;
@@ -114,6 +116,7 @@ export const projects: Project[] = [
           "Проработал desktop и mobile версии интерфейсов и подготовил дизайн к последующей HTML-вёрстке и разработке.",
       },
     ],
+    hideDesignSection: true,
     result:
       "Сложный сервис с двумя типами пользователей стал понятным и удобным — от поиска компании и её проектов до личного кабинета, карты и отзывов. Дизайн подготовлен к разработке.",
     tone: 1,

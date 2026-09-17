@@ -243,29 +243,31 @@ export default async function ProjectPage({
       </section>
 
       {/* 05. Design */}
-      <section
-        style={{
-          paddingBottom: 80,
-          paddingLeft: "var(--page-margin)",
-          paddingRight: "var(--page-margin)",
-          maxWidth: "var(--max-width)",
-          margin: "0 auto",
-        }}
-      >
-        <div className="flex flex-col gap-6">
-          <div className="aspect-[16/10] w-full overflow-hidden rounded-[24px]">
-            <PlaceholderImage tone={(project.tone + 1) % 6} label={`${project.title} — desktop`} />
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="aspect-[3/4] overflow-hidden rounded-[24px]">
-              <PlaceholderImage tone={(project.tone + 2) % 6} label={`${project.title} — mobile`} />
+      {!project.hideDesignSection && (
+        <section
+          style={{
+            paddingBottom: 80,
+            paddingLeft: "var(--page-margin)",
+            paddingRight: "var(--page-margin)",
+            maxWidth: "var(--max-width)",
+            margin: "0 auto",
+          }}
+        >
+          <div className="flex flex-col gap-6">
+            <div className="aspect-[16/10] w-full overflow-hidden rounded-[24px]">
+              <PlaceholderImage tone={(project.tone + 1) % 6} label={`${project.title} — desktop`} />
             </div>
-            <div className="aspect-[3/4] overflow-hidden rounded-[24px]">
-              <PlaceholderImage tone={(project.tone + 3) % 6} label={`${project.title} — UI detail`} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="aspect-[3/4] overflow-hidden rounded-[24px]">
+                <PlaceholderImage tone={(project.tone + 2) % 6} label={`${project.title} — mobile`} />
+              </div>
+              <div className="aspect-[3/4] overflow-hidden rounded-[24px]">
+                <PlaceholderImage tone={(project.tone + 3) % 6} label={`${project.title} — UI detail`} />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 06. Result */}
       <section
