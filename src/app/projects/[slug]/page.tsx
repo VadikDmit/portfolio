@@ -200,12 +200,12 @@ export default async function ProjectPage({
               {project.processParagraphs.map((step) => (
                 <div
                   key={step.title}
-                  className="border-t py-10"
+                  className="border-t pt-5 pb-10"
                   style={{ borderColor: "var(--color-border)" }}
                 >
-                  <h3 className="text-[19px] font-medium mb-2">{step.title}</h3>
+                  <h3 className="text-[19px] font-medium">{step.title}</h3>
                   <p
-                    className="text-[15px] leading-relaxed"
+                    className="mt-2 text-[15px] leading-relaxed"
                     style={{ color: "var(--color-fg-secondary)" }}
                   >
                     {step.description}
