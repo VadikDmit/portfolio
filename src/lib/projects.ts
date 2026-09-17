@@ -53,7 +53,7 @@ export const projects: Project[] = [
   {
     slug: "project-02",
     number: "02",
-    title: "Project 02",
+    title: "Built2measure",
     category: "UX/UI Design · Website",
     year: "2026",
     description: "Short project description",
@@ -74,7 +74,7 @@ export const projects: Project[] = [
   {
     slug: "project-03",
     number: "03",
-    title: "Project 03",
+    title: "GAYA",
     category: "Product Design · Vibe Coding",
     year: "2025",
     description: "Short project description",
@@ -95,7 +95,7 @@ export const projects: Project[] = [
   {
     slug: "project-04",
     number: "04",
-    title: "Project 04",
+    title: "Pena Pack",
     category: "UX/UI Design · Web Design",
     year: "2025",
     description: "Short project description",
@@ -116,7 +116,7 @@ export const projects: Project[] = [
   {
     slug: "project-05",
     number: "05",
-    title: "Project 05",
+    title: "BankFuture",
     category: "UX/UI Design · Vibe Coding",
     year: "2025",
     description: "Short project description",
@@ -137,7 +137,7 @@ export const projects: Project[] = [
   {
     slug: "project-06",
     number: "06",
-    title: "Project 06",
+    title: "Уголок",
     category: "Web Design · Product Design",
     year: "2024",
     description: "Short project description",
