@@ -195,19 +195,25 @@ export default async function ProjectPage({
         </h2>
 
         {project.processParagraphs ? (
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
-            <div className="md:col-span-7">
-              {project.processParagraphs.map((paragraph, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
+            <div>
+              {project.processParagraphs.map((step) => (
                 <div
-                  key={index}
+                  key={step.title}
                   className="border-t py-10"
                   style={{ borderColor: "var(--color-border)" }}
                 >
-                  <p className="text-[15px] leading-relaxed">{paragraph}</p>
+                  <h3 className="text-[19px] font-medium mb-2">{step.title}</h3>
+                  <p
+                    className="text-[15px] leading-relaxed"
+                    style={{ color: "var(--color-fg-secondary)" }}
+                  >
+                    {step.description}
+                  </p>
                 </div>
               ))}
             </div>
-            <div className="md:col-span-5">
+            <div>
               <div className="aspect-square w-full overflow-hidden rounded-[24px] md:sticky md:top-32">
                 <PlaceholderImage
                   tone={(project.tone + 1) % 6}
