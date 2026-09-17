@@ -47,6 +47,10 @@ export default async function ProjectPage({
           margin: "0 auto",
         }}
       >
+        <div className="aspect-[16/9] w-full overflow-hidden rounded-sm mb-12 md:mb-16">
+          <PlaceholderImage tone={project.tone} label={project.title} src={project.cover || undefined} />
+        </div>
+
         <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2 mb-6">
           <span
             className="text-[13px] tabular-nums"
@@ -75,10 +79,6 @@ export default async function ProjectPage({
         <p className="max-w-2xl text-[clamp(1.05rem,2vw,1.35rem)]" style={{ color: "var(--color-fg-secondary)" }}>
           {project.description}
         </p>
-
-        <div className="mt-14 aspect-[16/9] w-full overflow-hidden rounded-sm">
-          <PlaceholderImage tone={project.tone} label={project.title} />
-        </div>
       </section>
 
       {/* 02. About + 03. Role */}
