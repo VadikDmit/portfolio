@@ -30,9 +30,9 @@ export default function Home() {
             Vibe Coding · Tilda
           </p>
 
-          <div className="mt-6 flex items-center gap-3">
-            <Image src="/icons/user.svg" alt="" width={80} height={80} />
-            <Image src="/icons/chat_1_line.svg" alt="" width={80} height={80} />
+          <div className="mt-6 flex items-center gap-2">
+            <Image src="/icons/user.svg" alt="" width={72} height={72} className="rounded-[20px]" />
+            <Image src="/icons/chat_1_line.svg" alt="" width={72} height={72} className="rounded-[20px]" />
           </div>
         </div>
 
