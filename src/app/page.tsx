@@ -16,17 +16,14 @@ export default function Home() {
     >
       <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
         <div className="md:col-span-5 md:sticky md:top-32 self-start">
-          <h1 className="text-[clamp(2rem,4vw,3.25rem)] leading-[1.05] font-medium tracking-tight lg:whitespace-nowrap">
-            Вадим Дмитриев
-          </h1>
-          <p
-            className="mt-6 text-[clamp(1.1rem,2vw,1.5rem)] leading-snug"
-            style={{ color: "var(--color-fg-secondary)" }}
+          <h1
+            className="text-[clamp(2rem,4vw,3.25rem)] leading-[1.05] font-medium tracking-tight"
+            style={{ color: "var(--color-fg)" }}
           >
             UX/UI-дизайнер · Vibe Coding
-          </p>
+          </h1>
           <p
-            className="mt-4 text-[14px]"
+            className="mt-4 text-[16px]"
             style={{ color: "var(--color-fg-tertiary)" }}
           >
             Digital products, websites &amp; interfaces
