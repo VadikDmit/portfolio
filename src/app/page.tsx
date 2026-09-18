@@ -17,7 +17,7 @@ export default function Home() {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
         <div className="md:col-span-5 md:sticky md:top-32 self-start">
           <h1
-            className="text-[clamp(2rem,4vw,3.25rem)] leading-[1.05] font-medium tracking-tight"
+            className="text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.05] font-medium tracking-tight"
             style={{ color: "var(--color-fg)" }}
           >
             UX/UI-дизайнер · Vibe Coding
@@ -30,7 +30,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="md:col-span-7">
+        <div className="md:col-span-6">
           <HomeProjectsList projects={projects} />
         </div>
       </div>
