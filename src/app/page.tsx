@@ -4,11 +4,12 @@ import { projects } from "@/lib/projects";
 export default function Home() {
   return (
     <section
-      className="min-h-screen flex flex-col justify-center pr-[var(--page-margin)] md:pr-0"
+      className="min-h-screen flex flex-col justify-center"
       style={{
         paddingTop: 140,
         paddingBottom: 80,
         paddingLeft: "var(--page-margin)",
+        paddingRight: "var(--page-margin)",
         maxWidth: "var(--max-width)",
         margin: "0 auto",
       }}

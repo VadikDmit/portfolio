@@ -77,7 +77,7 @@ export default function HomeProjectsList({ projects }: { projects: Project[] }) 
           aria-hidden
           className="pointer-events-none fixed top-0 z-40 overflow-hidden rounded-[24px] transition-transform duration-500 ease-out"
           style={{
-            right: 0,
+            right: "var(--page-margin)",
             width: PREVIEW_WIDTH,
             height: PREVIEW_HEIGHT,
             transform: `translateY(${previewY}px)`,
