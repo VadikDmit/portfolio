@@ -16,7 +16,7 @@ export default function Home() {
       }}
     >
       <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
-        <div className="md:col-span-5 md:sticky md:top-32 self-start">
+        <div className="md:col-span-5 md:sticky md:top-1/2 md:-translate-y-1/2 self-start">
           <h1
             className="text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.05] font-medium tracking-tight"
             style={{ color: "var(--color-fg)" }}
