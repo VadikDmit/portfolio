@@ -28,7 +28,7 @@ export default function Home() {
             Vibe Coding · Tilda
           </p>
 
-          <div className="mt-6 flex items-center gap-2">
+          <div className="mt-12 flex items-center gap-2">
             <Image src="/icons/user.svg" alt="" width={72} height={72} className="rounded-[20px]" />
             <Image src="/icons/chat_1_line.svg" alt="" width={72} height={72} className="rounded-[20px]" />
           </div>
