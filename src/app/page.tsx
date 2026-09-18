@@ -20,13 +20,13 @@ export default function Home() {
             className="text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.05] font-medium tracking-tight"
             style={{ color: "var(--color-fg)" }}
           >
-            UX/UI-дизайнер · Vibe Coding
+            UX/UI-дизайнер
           </h1>
           <p
-            className="mt-4 text-[16px]"
-            style={{ color: "var(--color-fg-tertiary)" }}
+            className="mt-4 text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.05] font-medium tracking-tight"
+            style={{ color: "var(--color-fg-secondary)" }}
           >
-            Digital products, websites &amp; interfaces
+            Vibe Coding-Tilda
           </p>
         </div>
 
