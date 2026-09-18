@@ -1,3 +1,4 @@
+import Image from "next/image";
 import HomeProjectsList from "@/components/HomeProjectsList";
 import { projects } from "@/lib/projects";
 
@@ -28,6 +29,11 @@ export default function Home() {
           >
             Vibe Coding · Tilda
           </p>
+
+          <div className="mt-6 flex items-center gap-3">
+            <Image src="/icons/user.svg" alt="" width={40} height={40} />
+            <Image src="/icons/chat-1-line.svg" alt="" width={40} height={40} />
+          </div>
         </div>
 
         <div className="md:col-start-7 md:col-span-6">
