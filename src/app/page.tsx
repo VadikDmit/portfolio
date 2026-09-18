@@ -4,12 +4,11 @@ import { projects } from "@/lib/projects";
 export default function Home() {
   return (
     <section
-      className="min-h-screen flex flex-col justify-center"
+      className="min-h-screen flex flex-col justify-center pr-[var(--page-margin)] md:pr-0"
       style={{
         paddingTop: 140,
         paddingBottom: 80,
         paddingLeft: "var(--page-margin)",
-        paddingRight: "var(--page-margin)",
         maxWidth: "var(--max-width)",
         margin: "0 auto",
       }}
@@ -30,7 +29,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="md:col-span-6">
+        <div className="md:col-start-7 md:col-span-6">
           <HomeProjectsList projects={projects} />
         </div>
       </div>
