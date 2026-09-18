@@ -64,7 +64,7 @@ export default function HomeProjectsList({ projects }: { projects: Project[] }) 
                   className="hidden sm:block text-[13px] text-right shrink-0 max-w-[200px]"
                   style={{ color: "var(--color-fg-secondary)" }}
                 >
-                  {project.category}
+                  {project.listCategory ?? project.category}
                 </span>
               </Link>
             </li>

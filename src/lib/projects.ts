@@ -13,6 +13,8 @@ export type Project = {
   number: string;
   title: string;
   category: string;
+  /** Optional — shorter category label for the homepage list only. */
+  listCategory?: string;
   year: string;
   description: string;
   role: string[];
@@ -37,6 +39,7 @@ export const projects: Project[] = [
     number: "01",
     title: "Национальный театр УР",
     category: "UX/UI Design · Web Design · Redesign",
+    listCategory: "UX/UI Design · Redesign",
     year: "2026",
     description: "Редизайн сайта государственного национального театра Удмуртии",
     cover: "/projects/udmteatr/cover.png",
@@ -67,6 +70,7 @@ export const projects: Project[] = [
     number: "02",
     title: "Built2Measure",
     category: "UX/UI Design · Web Design · Product Design",
+    listCategory: "UX/UI Design · Product Design",
     year: "2025",
     description: "Сервис для строительных и ремонтных услуг (UK)",
     role: [
@@ -126,6 +130,7 @@ export const projects: Project[] = [
     number: "03",
     title: "GAYA",
     category: "Product Design · Vibe Coding",
+    listCategory: "Web Design",
     year: "2025",
     description: "Short project description",
     role: ["Visual concept", "Interface design", "Vibe Coding"],
@@ -148,6 +153,7 @@ export const projects: Project[] = [
     number: "04",
     title: "Pena Pack",
     category: "UX/UI Design · Web Design",
+    listCategory: "UX/UI Design · Redesign",
     year: "2025",
     description: "Short project description",
     role: ["UX/UI design", "Prototyping", "Responsive design"],
@@ -192,6 +198,7 @@ export const projects: Project[] = [
     number: "06",
     title: "Уголок",
     category: "Web Design · Product Design",
+    listCategory: "UX/UI Design · Web Design",
     year: "2024",
     description: "Short project description",
     role: ["Interface design", "Responsive design", "Prototyping"],
