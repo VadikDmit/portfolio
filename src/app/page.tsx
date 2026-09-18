@@ -5,10 +5,8 @@ import { projects } from "@/lib/projects";
 export default function Home() {
   return (
     <section
-      className="min-h-screen flex flex-col justify-center"
+      className="min-h-screen flex flex-col justify-center pt-[140px] pb-[80px] md:py-[110px]"
       style={{
-        paddingTop: 140,
-        paddingBottom: 80,
         paddingLeft: "var(--page-margin)",
         paddingRight: "var(--page-margin)",
         maxWidth: "var(--max-width)",
