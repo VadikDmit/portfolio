@@ -26,7 +26,7 @@ export default function Home() {
             className="mt-4 text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.05] font-medium tracking-tight"
             style={{ color: "var(--color-fg-secondary)" }}
           >
-            Vibe Coding-Tilda
+            Vibe Coding · Tilda
           </p>
         </div>
 
