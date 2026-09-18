@@ -31,8 +31,8 @@ export default function Home() {
           </p>
 
           <div className="mt-6 flex items-center gap-3">
-            <Image src="/icons/user.svg" alt="" width={40} height={40} />
-            <Image src="/icons/chat_1_line.svg" alt="" width={40} height={40} />
+            <Image src="/icons/user.svg" alt="" width={80} height={80} />
+            <Image src="/icons/chat_1_line.svg" alt="" width={80} height={80} />
           </div>
         </div>
 
