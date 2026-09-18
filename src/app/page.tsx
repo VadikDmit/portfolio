@@ -32,7 +32,7 @@ export default function Home() {
 
           <div className="mt-6 flex items-center gap-3">
             <Image src="/icons/user.svg" alt="" width={40} height={40} />
-            <Image src="/icons/chat-1-line.svg" alt="" width={40} height={40} />
+            <Image src="/icons/chat_1_line.svg" alt="" width={40} height={40} />
           </div>
         </div>
 
