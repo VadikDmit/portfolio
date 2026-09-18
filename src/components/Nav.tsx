@@ -29,7 +29,7 @@ export default function Nav() {
           aria-label="Вадим Дмитриев — на главную"
           className="pointer-events-auto transition-opacity duration-300 hover:opacity-70"
         >
-          <Image src="/logo.svg" alt="Вадим Дмитриев" width={102} height={22} priority />
+          <Image src="/logo.svg" alt="Вадим Дмитриев" width={133} height={29} priority />
         </Link>
 
         <nav
