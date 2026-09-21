@@ -8,7 +8,9 @@ import { getProjectBySlug, projects, type Project } from "@/lib/projects";
 import HomeProjectsList from "./HomeProjectsList";
 import PlaceholderImage from "./PlaceholderImage";
 import ProjectPanels from "./ProjectPanels";
+import { AboutPanels, ContactPanels } from "./PagePanels";
 
+type Page = "about" | "contact";
 type Rect = { top: number; left: number; width: number; height: number };
 type Flight = { project: Project; kind: "open" | "close"; from: Rect; to: Rect | null };
 
@@ -116,12 +118,41 @@ function IconTile({ href, label, src }: { href: string; label: string; src: stri
   );
 }
 
+function PageTile({
+  href,
+  label,
+  src,
+  onClick,
+}: {
+  href: string;
+  label: string;
+  src: string;
+  onClick: () => void;
+}) {
+  return (
+    <a
+      href={href}
+      aria-label={label}
+      title={label}
+      data-cursor="hover"
+      onClick={(e) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+        e.preventDefault();
+        onClick();
+      }}
+      className="block transition-opacity duration-300 hover:opacity-70"
+    >
+      <Image src={src} alt="" width={72} height={72} className="rounded-[20px]" />
+    </a>
+  );
+}
+
 function CloseButton({ onClick, className }: { onClick: () => void; className: string }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      aria-label="Закрыть проект"
+      aria-label="Закрыть"
       data-cursor="hover"
       className={`h-11 w-11 place-items-center rounded-[14px] bg-white transition-opacity duration-300 hover:opacity-70 ${className}`}
     >
@@ -137,8 +168,17 @@ function CloseButton({ onClick, className }: { onClick: () => void; className: s
   );
 }
 
-export default function Showcase({ initialSlug }: { initialSlug?: string }) {
+export default function Showcase({
+  initialSlug,
+  initialPage,
+}: {
+  initialSlug?: string;
+  initialPage?: Page;
+}) {
   const [slug, setSlug] = useState<string | null>(initialSlug ?? null);
+  const [page, setPage] = useState<Page | null>(initialPage ?? null);
+  const [pageSeen, setPageSeen] = useState(false);
+  const pageRef = useRef<Page | null>(initialPage ?? null);
   const [flight, setFlight] = useState<Flight | null>(null);
   const slugRef = useRef<string | null>(initialSlug ?? null);
   const frameRef = useRef<HTMLDivElement>(null);
@@ -205,6 +245,22 @@ export default function Showcase({ initialSlug }: { initialSlug?: string }) {
     window.scrollTo({ top: 0, behavior: animate ? "smooth" : "auto" });
   };
 
+  const showPage = (next: Page | null) => {
+    const current = pageRef.current;
+    if (next === current) return;
+    if (current === null) savedScrollRef.current = window.scrollY;
+    pageRef.current = next;
+    setPage(next);
+    if (next) setPageSeen(true);
+    window.scrollTo(0, next ? 0 : savedScrollRef.current);
+  };
+
+  const openPage = (next: Page) => {
+    if (flight || pageRef.current === next) return;
+    window.history.pushState({ showcaseDepth: historyDepth() + 1 }, "", `/${next}`);
+    showPage(next);
+  };
+
   const openFromList = (target: Project, from: DOMRect) => {
     if (flight) return;
     window.history.pushState(
@@ -231,18 +287,26 @@ export default function Showcase({ initialSlug }: { initialSlug?: string }) {
       window.history.go(-depth);
     } else {
       window.history.replaceState({}, "", "/");
+      showPage(null);
       transition(null);
     }
   };
 
-  const latest = useRef({ transition, close });
+  const latest = useRef({ transition, close, showPage });
   useEffect(() => {
-    latest.current = { transition, close };
+    latest.current = { transition, close, showPage };
   });
 
   useEffect(() => {
     const onPop = () => {
       const path = window.location.pathname;
+      const pageMatch = path.match(/^\/(about|contact)\/?$/);
+      if (pageMatch) {
+        latest.current.transition(null);
+        latest.current.showPage(pageMatch[1] as Page);
+        return;
+      }
+      latest.current.showPage(null);
       if (path === "/") {
         latest.current.transition(null);
         return;
@@ -251,7 +315,7 @@ export default function Showcase({ initialSlug }: { initialSlug?: string }) {
       if (match && getProjectBySlug(match[1])) latest.current.transition(match[1]);
     };
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && slugRef.current) latest.current.close();
+      if (e.key === "Escape" && (slugRef.current || pageRef.current)) latest.current.close();
     };
     window.addEventListener("popstate", onPop);
     window.addEventListener("keydown", onKey);
@@ -272,8 +336,10 @@ export default function Showcase({ initialSlug }: { initialSlug?: string }) {
   useEffect(() => {
     document.title = project
       ? `${project.title} — Вадим Дмитриев`
-      : "Вадим Дмитриев — UX/UI Designer | Vibe Coding";
-  }, [project]);
+      : page
+        ? `${page === "about" ? "About" : "Contact"} — Вадим Дмитриев`
+        : "Вадим Дмитриев — UX/UI Designer | Vibe Coding";
+  }, [project, page]);
 
   const opening = flight?.kind === "open";
   const closing = flight?.kind === "close";
@@ -340,8 +406,8 @@ export default function Showcase({ initialSlug }: { initialSlug?: string }) {
                     Vibe Coding · Tilda
                   </p>
                   <div className="mt-12 flex items-center gap-2">
-                    <Image src="/icons/user.svg" alt="" width={72} height={72} className="rounded-[20px]" />
-                    <Image src="/icons/chat_1_line.svg" alt="" width={72} height={72} className="rounded-[20px]" />
+                    <PageTile href="/about" label="About" src="/icons/user.svg" onClick={() => openPage("about")} />
+                    <PageTile href="/contact" label="Contact" src="/icons/chat_1_line.svg" onClick={() => openPage("contact")} />
                   </div>
                 </>
               )}
@@ -350,7 +416,7 @@ export default function Showcase({ initialSlug }: { initialSlug?: string }) {
         </div>
 
         {/* Close button (desktop): sits in the empty 6th column, follows scroll */}
-        {project && !opening && (
+        {((project && !opening) || page) && (
           <CloseButton
             onClick={close}
             className="hidden md:grid md:col-start-6 md:row-start-1 md:row-span-2 md:self-start md:justify-self-end md:-mr-11 md:sticky md:top-[100px] md:z-10"
@@ -365,15 +431,33 @@ export default function Showcase({ initialSlug }: { initialSlug?: string }) {
         >
           <div className="grid w-full [&>*]:col-start-1 [&>*]:row-start-1">
             <div
-              className={project ? "max-md:hidden md:invisible" : ""}
+              className={page ? "hidden" : project ? "max-md:hidden md:invisible" : ""}
               style={
                 closing
                   ? { animation: "showcase-fade 500ms 200ms both" }
-                  : undefined
+                  : pageSeen && !project
+                    ? { animation: "showcase-fade 500ms both" }
+                    : undefined
               }
             >
               <HomeProjectsList projects={projects} onOpen={openFromList} />
             </div>
+
+            {page && (
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={page}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.35 }}
+                  className="self-center"
+                >
+                  <CloseButton onClick={close} className="mb-4 grid md:hidden" />
+                  {page === "about" ? <AboutPanels /> : <ContactPanels />}
+                </motion.div>
+              </AnimatePresence>
+            )}
 
             {project && (
               <div

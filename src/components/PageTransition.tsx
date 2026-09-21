@@ -16,7 +16,7 @@ export default function PageTransition({
 }) {
   const pathname = usePathname();
   // Home and project URLs share one persistent screen (Showcase changes the URL in place).
-  const key = pathname === "/" || pathname.startsWith("/projects/") ? "showcase" : pathname;
+  const key = pathname === "/" || pathname === "/about" || pathname === "/contact" || pathname.startsWith("/projects/") ? "showcase" : pathname;
 
   return (
     <AnimatePresence mode="wait" initial={false}>
