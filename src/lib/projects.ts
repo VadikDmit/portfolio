@@ -16,6 +16,10 @@ export type Project = {
   /** Optional — shorter category label for the homepage list only. */
   listCategory?: string;
   year: string;
+  /** Optional — link to the Figma file. "#" means a stub (button shown, no navigation). */
+  figmaUrl?: string;
+  /** Optional — link to the live site. "#" means a stub. */
+  siteUrl?: string;
   description: string;
   role: string[];
   cover: string;
@@ -41,6 +45,8 @@ export const projects: Project[] = [
     category: "UX/UI Design · Web Design · Redesign",
     listCategory: "UX/UI Design · Redesign",
     year: "2026",
+    figmaUrl: "#",
+    siteUrl: "https://udmteatr.ru/ru",
     description: "Редизайн сайта государственного национального театра Удмуртии",
     cover: "/projects/udmteatr/cover.png",
     role: [
@@ -72,6 +78,8 @@ export const projects: Project[] = [
     category: "UX/UI Design · Web Design · Product Design",
     listCategory: "UX/UI Design · Product Design",
     year: "2025",
+    figmaUrl: "#",
+    siteUrl: "https://built2measure.com/",
     description: "Сервис для строительных и ремонтных услуг (UK)",
     role: [
       "UX research",
@@ -132,6 +140,8 @@ export const projects: Project[] = [
     category: "Product Design · Vibe Coding",
     listCategory: "Web Design",
     year: "2025",
+    figmaUrl: "#",
+    siteUrl: "#",
     description: "Short project description",
     role: ["Visual concept", "Interface design", "Vibe Coding"],
     cover: "",
@@ -155,6 +165,8 @@ export const projects: Project[] = [
     category: "UX/UI Design · Web Design",
     listCategory: "UX/UI Design · Redesign",
     year: "2025",
+    figmaUrl: "#",
+    siteUrl: "#",
     description: "Short project description",
     role: ["UX/UI design", "Prototyping", "Responsive design"],
     cover: "",
@@ -177,6 +189,8 @@ export const projects: Project[] = [
     title: "BankFuture",
     category: "UX/UI Design · Vibe Coding",
     year: "2025",
+    figmaUrl: "#",
+    siteUrl: "#",
     description: "Short project description",
     role: ["UX/UI design", "Visual concept", "Vibe Coding"],
     cover: "",
@@ -200,6 +214,8 @@ export const projects: Project[] = [
     category: "Web Design · Product Design",
     listCategory: "UX/UI Design · Web Design",
     year: "2024",
+    figmaUrl: "#",
+    siteUrl: "#",
     description: "Short project description",
     role: ["Interface design", "Responsive design", "Prototyping"],
     cover: "",

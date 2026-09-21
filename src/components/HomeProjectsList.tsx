@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Project } from "@/lib/projects";
@@ -10,9 +10,15 @@ import PlaceholderImage from "./PlaceholderImage";
 const PREVIEW_WIDTH = 280;
 const PREVIEW_HEIGHT = 320;
 
-export default function HomeProjectsList({ projects }: { projects: Project[] }) {
+type HomeProjectsListProps = {
+  projects: Project[];
+  onOpen: (project: Project, from: DOMRect) => void;
+};
+
+export default function HomeProjectsList({ projects, onOpen }: HomeProjectsListProps) {
   const [hovered, setHovered] = useState<Project | null>(null);
   const [previewY, setPreviewY] = useState(0);
+  const previewRef = useRef<HTMLDivElement>(null);
   const showFloatingPreview = useMediaQuery(
     "(hover: hover) and (pointer: fine) and (min-width: 1024px)"
   );
@@ -21,6 +27,25 @@ export default function HomeProjectsList({ projects }: { projects: Project[] }) 
     const rect = e.currentTarget.getBoundingClientRect();
     setPreviewY(rect.top + rect.height / 2 - PREVIEW_HEIGHT / 2);
     setHovered(project);
+  };
+
+  const handleClick = (project: Project, e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    e.preventDefault();
+
+    const row = e.currentTarget;
+    const thumb = row.querySelector<HTMLElement>("[data-project-thumb]");
+    let from: DOMRect;
+    if (showFloatingPreview && hovered?.slug === project.slug && previewRef.current) {
+      from = previewRef.current.getBoundingClientRect();
+    } else if (thumb && thumb.offsetParent) {
+      from = thumb.getBoundingClientRect();
+    } else {
+      from = row.getBoundingClientRect();
+    }
+
+    setHovered(null);
+    onOpen(project, from);
   };
 
   return (
@@ -39,8 +64,10 @@ export default function HomeProjectsList({ projects }: { projects: Project[] }) 
               <Link
                 href={`/projects/${project.slug}`}
                 data-cursor="hover"
+                data-project-row={project.slug}
                 onMouseEnter={(e) => handleRowEnter(project, e)}
                 onMouseLeave={() => setHovered(null)}
+                onClick={(e) => handleClick(project, e)}
                 className="group flex items-center justify-between gap-6 py-6 sm:py-7 transition-opacity duration-300"
                 style={{ opacity: isDimmed ? 0.35 : 1 }}
               >
@@ -55,7 +82,10 @@ export default function HomeProjectsList({ projects }: { projects: Project[] }) 
                   </span>
 
                   {/* Mobile-only inline thumbnail, no hover dependency */}
-                  <span className="sm:hidden shrink-0 w-16 h-20 overflow-hidden rounded-[24px]">
+                  <span
+                    data-project-thumb
+                    className="sm:hidden shrink-0 w-16 h-20 overflow-hidden rounded-[24px]"
+                  >
                     <PlaceholderImage tone={project.tone} label={project.title} src={project.cover || undefined} />
                   </span>
                 </span>
@@ -74,6 +104,8 @@ export default function HomeProjectsList({ projects }: { projects: Project[] }) 
 
       {showFloatingPreview && (
         <div
+          ref={previewRef}
+          data-hover-preview
           aria-hidden
           className="pointer-events-none fixed top-0 z-40 overflow-hidden rounded-[24px] transition-transform duration-500 ease-out"
           style={{

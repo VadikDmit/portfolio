@@ -15,11 +15,13 @@ export default function PageTransition({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  // Home and project URLs share one persistent screen (Showcase changes the URL in place).
+  const key = pathname === "/" || pathname.startsWith("/projects/") ? "showcase" : pathname;
 
   return (
     <AnimatePresence mode="wait" initial={false}>
       <motion.div
-        key={pathname}
+        key={key}
         variants={variants}
         initial="initial"
         animate="animate"

@@ -84,3 +84,12 @@ button:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+
+@keyframes showcase-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
