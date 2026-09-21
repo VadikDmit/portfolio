@@ -31,6 +31,7 @@ export default function Nav() {
             window.dispatchEvent(new Event("showcase:home"));
           }}
           className="pointer-events-auto transition-opacity duration-300 hover:opacity-70"
+          style={{ animation: "logo-in 800ms cubic-bezier(0.32, 0, 0, 1) 80ms backwards" }}
         >
           <Image src="/logo.svg" alt="Вадим Дмитриев" width={133} height={29} priority />
         </Link>

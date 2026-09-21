@@ -17,7 +17,9 @@ type Flight = { project: Project; kind: "open" | "close"; from: Rect; to: Rect |
 // The home intro (masked title reveal + rising tiles) plays once per page load.
 let introDone = false;
 const INTRO_EASE = "cubic-bezier(0.32, 0, 0, 1)";
-const tileRise = (i: number) => `tile-rise 720ms ${INTRO_EASE} ${350 + i * 80}ms both`;
+// Timeline (ms) taken from the reference: text 80, buttons 360, project list 360.
+const tileRise = (i: number) => `tile-rise 720ms ${INTRO_EASE} ${360 + i * 80}ms both`;
+const LIST_INTRO = `list-rise 1200ms ${INTRO_EASE} 360ms both, showcase-fade 700ms ${INTRO_EASE} 360ms both`;
 
 function Reveal({ play, delay = 0, children }: { play: boolean; delay?: number; children: React.ReactNode }) {
   return (
@@ -556,13 +558,13 @@ export default function Showcase({
                     className="text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.05] font-medium tracking-tight"
                     style={{ color: "var(--color-fg)" }}
                   >
-                    <Reveal play={playIntro}>UX/UI-дизайнер</Reveal>
+                    <Reveal play={playIntro} delay={80}>UX/UI-дизайнер</Reveal>
                   </h1>
                   <p
                     className="mt-4 text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.05] font-medium tracking-tight"
                     style={{ color: "var(--color-fg-secondary)" }}
                   >
-                    <Reveal play={playIntro} delay={90}>
+                    <Reveal play={playIntro} delay={170}>
                       Vibe Coding · Tilda
                     </Reveal>
                   </p>
@@ -595,7 +597,9 @@ export default function Showcase({
                   : ""
               }
               style={
-                closing
+                playIntro && !project && !page
+                  ? { animation: LIST_INTRO }
+                  : closing
                   ? { animation: "showcase-fade 500ms 200ms both" }
                   : pageSeen && !project
                     ? { animation: "showcase-fade 500ms both" }
