@@ -162,7 +162,15 @@ function PageTile({
   );
 }
 
-function TileClose({ onClick, label = "Закрыть контакты" }: { onClick: () => void; label?: string }) {
+function TileClose({
+  onClick,
+  label = "Закрыть контакты",
+  back,
+}: {
+  onClick: () => void;
+  label?: string;
+  back?: boolean;
+}) {
   return (
     <button
       type="button"
@@ -173,7 +181,13 @@ function TileClose({ onClick, label = "Закрыть контакты" }: { onC
       style={{ animation: "tile-in 600ms var(--ease-out) both" }}
     >
       <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden>
-        <path d="M3 3l10 10M13 3L3 13" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+        <path
+          d={back ? "M14 8H2.5M7.5 3L2.5 8l5 5" : "M3 3l10 10M13 3L3 13"}
+          stroke="white"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     </button>
   );
@@ -294,6 +308,7 @@ export default function Showcase({
   const openPage = (next: Page) => {
     if (flight || pageRef.current === next) return;
     window.history.pushState({ showcaseDepth: historyDepth() + 1 }, "", `/${next}`);
+    toggleContact(false);
     showPage(next);
   };
 
@@ -400,7 +415,7 @@ export default function Showcase({
 
   const showMobileClose = !contact && project && !opening;
 
-  const renderTiles = (mobile: boolean) => project ? (
+  const renderTiles = () => project ? (
     <>
                     {project.figmaUrl && (
                       <IconTile href={project.figmaUrl} label="Проект в Figma" src="/icons/figma.svg" />
@@ -411,11 +426,19 @@ export default function Showcase({
     </>
   ) : (
     <>
-                    {mobile && page === "about" && !contact ? (
-                      <TileClose onClick={close} label="Закрыть About" />
+                    {page === "about" ? (
+                      <>
+                        <TileClose back onClick={close} label="Назад" />
+                        <div style={{ animation: "tile-in 600ms var(--ease-out) 100ms both" }}>
+                          <IconTile href={`mailto:${EMAIL}`} label="Написать на почту" src="/icons/mail.svg" sameTab />
+                        </div>
+                        <div style={{ animation: "tile-in 600ms var(--ease-out) 200ms both" }}>
+                          <IconTile href={TELEGRAM_URL} label="Написать в Telegram" src="/icons/telegram_line.svg" />
+                        </div>
+                      </>
                     ) : (
-                      <PageTile href="/about" label="About" src="/icons/user.svg" onClick={() => openPage("about")} />
-                    )}
+                      <>
+                    <PageTile href="/about" label="About" src="/icons/user.svg" onClick={() => openPage("about")} />
                     <AnimatePresence mode="wait" initial={false}>
                       {contact ? (
                         <motion.div
@@ -443,6 +466,8 @@ export default function Showcase({
                         </motion.div>
                       )}
                     </AnimatePresence>
+                      </>
+                    )}
     </>
   );
 
@@ -484,7 +509,7 @@ export default function Showcase({
                   >
                     {project.listCategory ?? project.category}
                   </p>
-                  <div className="mt-12 hidden items-center gap-2 md:flex">{renderTiles(false)}</div>
+                  <div className="mt-12 hidden items-center gap-2 md:flex">{renderTiles()}</div>
                 </>
               ) : (
                 <>
@@ -500,7 +525,7 @@ export default function Showcase({
                   >
                     Vibe Coding · Tilda
                   </p>
-                  <div className="mt-12 hidden items-center gap-2 md:flex">{renderTiles(false)}</div>
+                  <div className="mt-12 hidden items-center gap-2 md:flex">{renderTiles()}</div>
                 </>
               )}
             </motion.div>
@@ -583,7 +608,7 @@ export default function Showcase({
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
             className="pointer-events-auto flex items-center gap-2"
           >
-            {renderTiles(true)}
+            {renderTiles()}
           </motion.div>
         </AnimatePresence>
         <AnimatePresence>
