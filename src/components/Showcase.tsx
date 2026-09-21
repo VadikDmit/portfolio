@@ -398,68 +398,19 @@ export default function Showcase({
   const opening = flight?.kind === "open";
   const closing = flight?.kind === "close";
 
-  return (
-    <section
-      className="mx-auto pt-[140px] pb-20 md:pt-0 md:pb-0"
-      style={{
-        paddingLeft: "var(--page-margin)",
-        paddingRight: "var(--page-margin)",
-        maxWidth: "var(--max-width)",
-      }}
-    >
-      <div className="grid grid-cols-1 gap-y-10 md:grid-cols-12 md:gap-x-16 md:gap-y-0">
-        {/* Left: intro or project title */}
-        <div
-          className={`md:col-span-5 md:col-start-1 md:row-span-2 md:row-start-1 md:sticky md:top-1/2 md:-translate-y-1/2 md:self-start ${
-            project ? "max-md:order-2" : "max-md:order-1"
-          }`}
-        >
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={project ? project.slug : "intro"}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.3 }}
-            >
-              {project ? (
-                <>
-                  <h1
-                    className="text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.05] font-medium tracking-tight"
-                    style={{ color: "var(--color-fg)" }}
-                  >
-                    {project.title}
-                  </h1>
-                  <p
-                    className="mt-4 text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.05] font-medium tracking-tight"
-                    style={{ color: "var(--color-fg-secondary)" }}
-                  >
-                    {project.listCategory ?? project.category}
-                  </p>
-                  <div className="mt-12 flex items-center gap-2">
+  const showMobileClose = !contact && ((project && !opening) || page === "about");
+
+  const tiles = project ? (
+    <>
                     {project.figmaUrl && (
                       <IconTile href={project.figmaUrl} label="Проект в Figma" src="/icons/figma.svg" />
                     )}
                     {project.siteUrl && (
                       <IconTile href={project.siteUrl} label="Открыть сайт" src="/icons/link.svg" />
                     )}
-                  </div>
-                </>
-              ) : (
-                <>
-                  <h1
-                    className="text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.05] font-medium tracking-tight"
-                    style={{ color: "var(--color-fg)" }}
-                  >
-                    UX/UI-дизайнер
-                  </h1>
-                  <p
-                    className="mt-4 text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.05] font-medium tracking-tight"
-                    style={{ color: "var(--color-fg-secondary)" }}
-                  >
-                    Vibe Coding · Tilda
-                  </p>
-                  <div className="mt-12 flex items-center gap-2">
+    </>
+  ) : (
+    <>
                     <PageTile href="/about" label="About" src="/icons/user.svg" onClick={() => openPage("about")} />
                     <AnimatePresence mode="wait" initial={false}>
                       {contact ? (
@@ -488,7 +439,64 @@ export default function Showcase({
                         </motion.div>
                       )}
                     </AnimatePresence>
-                  </div>
+    </>
+  );
+
+  return (
+    <section
+      className="mx-auto pt-[110px] pb-36 md:pt-0 md:pb-0"
+      style={{
+        paddingLeft: "var(--page-margin)",
+        paddingRight: "var(--page-margin)",
+        maxWidth: "var(--max-width)",
+      }}
+    >
+      <div className="grid grid-cols-1 gap-y-10 md:grid-cols-12 md:gap-x-16 md:gap-y-0">
+        {/* Left: intro or project title */}
+        <div
+          className={`max-md:text-center md:col-span-5 md:col-start-1 md:row-span-2 md:row-start-1 md:sticky md:top-1/2 md:-translate-y-1/2 md:self-start ${
+            project ? "max-md:order-2" : "max-md:order-1"
+          }`}
+        >
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={project ? project.slug : "intro"}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.3 }}
+            >
+              {project ? (
+                <>
+                  <h1
+                    className="text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.05] font-medium tracking-tight"
+                    style={{ color: "var(--color-fg)" }}
+                  >
+                    {project.title}
+                  </h1>
+                  <p
+                    className="mt-4 text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.05] font-medium tracking-tight"
+                    style={{ color: "var(--color-fg-secondary)" }}
+                  >
+                    {project.listCategory ?? project.category}
+                  </p>
+                  <div className="mt-12 hidden items-center gap-2 md:flex">{tiles}</div>
+                </>
+              ) : (
+                <>
+                  <h1
+                    className="text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.05] font-medium tracking-tight"
+                    style={{ color: "var(--color-fg)" }}
+                  >
+                    UX/UI-дизайнер
+                  </h1>
+                  <p
+                    className="mt-4 text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.05] font-medium tracking-tight"
+                    style={{ color: "var(--color-fg-secondary)" }}
+                  >
+                    Vibe Coding · Tilda
+                  </p>
+                  <div className="mt-12 hidden items-center gap-2 md:flex">{tiles}</div>
                 </>
               )}
             </motion.div>
@@ -499,7 +507,7 @@ export default function Showcase({
         {((project && !opening) || page === "about") && (
           <CloseButton
             onClick={close}
-            className="hidden md:grid md:col-start-6 md:row-start-1 md:row-span-2 md:self-start md:justify-self-end md:-mr-[72px] md:sticky md:top-[100px] md:z-10"
+            className="hidden md:grid md:col-start-6 md:row-start-1 md:row-span-2 md:self-start md:justify-self-end md:-mr-10 md:sticky md:top-[100px] md:z-10"
           />
         )}
 
@@ -525,7 +533,6 @@ export default function Showcase({
 
             {page === "about" && (
               <div className="flex flex-col" style={{ animation: "showcase-fade 400ms both" }}>
-                <CloseButton onClick={close} className="mb-4 grid self-start md:hidden" />
                 <AboutPanels className="md:flex-1" />
               </div>
             )}
@@ -543,12 +550,6 @@ export default function Showcase({
                     src={project.cover || undefined}
                   />
                 </div>
-                {!opening && (
-                  <CloseButton
-                    onClick={close}
-                    className="absolute left-4 top-4 grid md:hidden"
-                  />
-                )}
               </div>
             )}
           </div>
@@ -559,6 +560,23 @@ export default function Showcase({
           <div className="max-md:order-3 md:col-span-6 md:col-start-7 md:row-start-2">
             <ProjectPanels project={project} onNext={openNext} />
           </div>
+        )}
+      </div>
+
+      {/* Mobile: tiles pinned to the bottom, close button on the right */}
+      <div
+        className={`pointer-events-none fixed inset-x-0 bottom-0 z-40 flex items-center px-5 pb-5 md:hidden [&_button]:shadow-[0_6px_24px_rgba(0,0,0,0.14)] [&_img]:shadow-[0_6px_24px_rgba(0,0,0,0.14)] ${
+          showMobileClose ? "justify-between" : "justify-center"
+        }`}
+      >
+        <div
+          key={project ? project.slug : "intro"}
+          className="pointer-events-auto flex items-center gap-2"
+        >
+          {tiles}
+        </div>
+        {showMobileClose && (
+          <CloseButton onClick={close} className="pointer-events-auto grid" />
         )}
       </div>
 

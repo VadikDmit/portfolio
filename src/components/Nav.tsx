@@ -13,9 +13,9 @@ export default function Nav() {
     pathname.startsWith("/projects/");
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
+    <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none max-md:pointer-events-auto max-md:bg-[var(--color-bg)]">
       <div
-        className="flex items-center justify-between"
+        className="flex items-center justify-center md:justify-between"
         style={{
           maxWidth: "var(--max-width)",
           margin: "0 auto",
