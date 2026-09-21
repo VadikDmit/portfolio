@@ -14,6 +14,24 @@ type Page = "about";
 type Rect = { top: number; left: number; width: number; height: number };
 type Flight = { project: Project; kind: "open" | "close"; from: Rect; to: Rect | null };
 
+// The home intro (masked title reveal + rising tiles) plays once per page load.
+let introDone = false;
+const INTRO_EASE = "cubic-bezier(0.32, 0, 0, 1)";
+const tileRise = (i: number) => `tile-rise 720ms ${INTRO_EASE} ${350 + i * 80}ms both`;
+
+function Reveal({ play, delay = 0, children }: { play: boolean; delay?: number; children: React.ReactNode }) {
+  return (
+    <span className="-mb-[0.2em] block overflow-hidden pb-[0.2em]">
+      <span
+        className="block will-change-transform"
+        style={play ? { animation: `intro-mask 1200ms ${INTRO_EASE} ${delay}ms both` } : undefined}
+      >
+        {children}
+      </span>
+    </span>
+  );
+}
+
 const EMAIL = "mr.dzoker@yandex.ru";
 const TELEGRAM_URL = "https://t.me/VadikD";
 
@@ -228,6 +246,12 @@ export default function Showcase({
   const [contact, setContact] = useState(initialPage === "contact");
   const contactRef = useRef(initialPage === "contact");
   const [pageSeen, setPageSeen] = useState(false);
+  const [playIntro, setPlayIntro] = useState(() => !introDone && !initialSlug && !initialPage);
+  useEffect(() => {
+    introDone = true;
+    const t = window.setTimeout(() => setPlayIntro(false), 2200);
+    return () => window.clearTimeout(t);
+  }, []);
   const pageRef = useRef<Page | null>(initialPage === "about" ? "about" : null);
   const [flight, setFlight] = useState<Flight | null>(null);
   const slugRef = useRef<string | null>(initialSlug ?? null);
@@ -449,7 +473,9 @@ export default function Showcase({
                       </>
                     ) : (
                       <>
-                    <PageTile href="/about" label="About" src="/icons/user.svg" onClick={() => openPage("about")} />
+                    <div style={playIntro ? { animation: tileRise(0) } : undefined}>
+                      <PageTile href="/about" label="About" src="/icons/user.svg" onClick={() => openPage("about")} />
+                    </div>
                     <AnimatePresence mode="wait" initial={false}>
                       {contact ? (
                         <motion.div
@@ -473,7 +499,9 @@ export default function Showcase({
                           animate={{ opacity: 1 }}
                           transition={{ duration: 0.3 }}
                         >
-                          <PageTile href="/contact" label="Contact" src="/icons/chat_1_line.svg" onClick={() => toggleContact(true)} />
+                          <div style={playIntro ? { animation: tileRise(1) } : undefined}>
+                            <PageTile href="/contact" label="Contact" src="/icons/chat_1_line.svg" onClick={() => toggleContact(true)} />
+                          </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -528,13 +556,15 @@ export default function Showcase({
                     className="text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.05] font-medium tracking-tight"
                     style={{ color: "var(--color-fg)" }}
                   >
-                    UX/UI-дизайнер
+                    <Reveal play={playIntro}>UX/UI-дизайнер</Reveal>
                   </h1>
                   <p
                     className="mt-4 text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.05] font-medium tracking-tight"
                     style={{ color: "var(--color-fg-secondary)" }}
                   >
-                    Vibe Coding · Tilda
+                    <Reveal play={playIntro} delay={90}>
+                      Vibe Coding · Tilda
+                    </Reveal>
                   </p>
                   <div className="mt-12 hidden items-center gap-2 md:flex">{renderTiles()}</div>
                 </>
