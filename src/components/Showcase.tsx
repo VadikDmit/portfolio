@@ -8,11 +8,14 @@ import { getProjectBySlug, projects, type Project } from "@/lib/projects";
 import HomeProjectsList from "./HomeProjectsList";
 import PlaceholderImage from "./PlaceholderImage";
 import ProjectPanels from "./ProjectPanels";
-import { AboutPanels, ContactPanels } from "./PagePanels";
+import { AboutPanels } from "./PagePanels";
 
 type Page = "about" | "contact";
 type Rect = { top: number; left: number; width: number; height: number };
 type Flight = { project: Project; kind: "open" | "close"; from: Rect; to: Rect | null };
+
+const EMAIL = "hello@vadimdmitriev.com";
+const TELEGRAM_URL = "#";
 
 const OPEN_MS = 750;
 const CLOSE_MS = 600;
@@ -100,7 +103,17 @@ function Flyer({ flight, onDone }: { flight: Flight; onDone: () => void }) {
   );
 }
 
-function IconTile({ href, label, src }: { href: string; label: string; src: string }) {
+function IconTile({
+  href,
+  label,
+  src,
+  sameTab,
+}: {
+  href: string;
+  label: string;
+  src: string;
+  sameTab?: boolean;
+}) {
   const stub = href === "#";
   return (
     <a
@@ -110,7 +123,9 @@ function IconTile({ href, label, src }: { href: string; label: string; src: stri
       data-cursor="hover"
       {...(stub
         ? { onClick: (e: React.MouseEvent) => e.preventDefault() }
-        : { target: "_blank", rel: "noopener noreferrer" })}
+        : sameTab
+          ? {}
+          : { target: "_blank", rel: "noopener noreferrer" })}
       className="block transition-opacity duration-300 hover:opacity-70"
     >
       <Image src={src} alt="" width={72} height={72} className="rounded-[20px]" />
@@ -144,6 +159,22 @@ function PageTile({
     >
       <Image src={src} alt="" width={72} height={72} className="rounded-[20px]" />
     </a>
+  );
+}
+
+function TileClose({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label="Закрыть контакты"
+      data-cursor="hover"
+      className="grid h-[72px] w-[72px] place-items-center rounded-[20px] bg-white transition-opacity duration-300 hover:opacity-70"
+    >
+      <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden>
+        <path d="M3 3l10 10M13 3L3 13" stroke="black" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    </button>
   );
 }
 
@@ -407,7 +438,17 @@ export default function Showcase({
                   </p>
                   <div className="mt-12 flex items-center gap-2">
                     <PageTile href="/about" label="About" src="/icons/user.svg" onClick={() => openPage("about")} />
-                    <PageTile href="/contact" label="Contact" src="/icons/chat_1_line.svg" onClick={() => openPage("contact")} />
+                    {page === "contact" ? (
+                      <>
+                        <TileClose onClick={close} />
+                        <div className="flex gap-2" style={{ animation: "showcase-fade 400ms both" }}>
+                          <IconTile href={`mailto:${EMAIL}`} label="Написать на почту" src="/icons/mail.svg" sameTab />
+                          <IconTile href={TELEGRAM_URL} label="Написать в Telegram" src="/icons/telegram_line.svg" />
+                        </div>
+                      </>
+                    ) : (
+                      <PageTile href="/contact" label="Contact" src="/icons/chat_1_line.svg" onClick={() => openPage("contact")} />
+                    )}
                   </div>
                 </>
               )}
@@ -416,7 +457,7 @@ export default function Showcase({
         </div>
 
         {/* Close button (desktop): sits in the empty 6th column, follows scroll */}
-        {((project && !opening) || page) && (
+        {((project && !opening) || page === "about") && (
           <CloseButton
             onClick={close}
             className="hidden md:grid md:col-start-6 md:row-start-1 md:row-span-2 md:self-start md:justify-self-end md:-mr-11 md:sticky md:top-[100px] md:z-10"
@@ -431,7 +472,7 @@ export default function Showcase({
         >
           <div className="grid w-full [&>*]:col-start-1 [&>*]:row-start-1">
             <div
-              className={page ? "hidden" : project ? "max-md:hidden md:invisible" : ""}
+              className={project || page === "about" ? "max-md:hidden md:invisible" : ""}
               style={
                 closing
                   ? { animation: "showcase-fade 500ms 200ms both" }
@@ -443,41 +484,10 @@ export default function Showcase({
               <HomeProjectsList projects={projects} onOpen={openFromList} />
             </div>
 
-            {page && (
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={page}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.35 }}
-                  className="self-center"
-                >
-                  <CloseButton onClick={close} className="mb-4 grid md:hidden" />
-                  {page === "about" ? <AboutPanels /> : <ContactPanels />}
-                </motion.div>
-              </AnimatePresence>
-            )}
-
-            {project && (
-              <div
-                ref={frameRef}
-                className="relative overflow-hidden rounded-[24px] max-md:aspect-[4/5]"
-                style={{ visibility: opening ? "hidden" : "visible" }}
-              >
-                <div className="absolute inset-0">
-                  <PlaceholderImage
-                    tone={project.tone}
-                    label={project.title}
-                    src={project.cover || undefined}
-                  />
-                </div>
-                {!opening && (
-                  <CloseButton
-                    onClick={close}
-                    className="absolute left-3 top-3 grid md:hidden"
-                  />
-                )}
+            {page === "about" && (
+              <div className="flex flex-col" style={{ animation: "showcase-fade 400ms both" }}>
+                <CloseButton onClick={close} className="mb-4 grid self-start md:hidden" />
+                <AboutPanels className="md:flex-1" />
               </div>
             )}
           </div>
