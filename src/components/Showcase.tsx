@@ -507,7 +507,7 @@ export default function Showcase({
         {((project && !opening) || page === "about") && (
           <CloseButton
             onClick={close}
-            className="hidden md:grid md:col-start-6 md:row-start-1 md:row-span-2 md:self-start md:justify-self-end md:-mr-10 md:sticky md:top-[100px] md:z-10"
+            className="hidden md:grid md:col-start-6 md:row-start-1 md:row-span-2 md:self-start md:justify-self-end md:-mr-14 md:sticky md:top-[100px] md:z-10"
           />
         )}
 
@@ -569,15 +569,34 @@ export default function Showcase({
           showMobileClose ? "justify-between" : "justify-center"
         }`}
       >
-        <div
-          key={project ? project.slug : "intro"}
-          className="pointer-events-auto flex items-center gap-2"
-        >
-          {tiles}
-        </div>
-        {showMobileClose && (
-          <CloseButton onClick={close} className="pointer-events-auto grid" />
-        )}
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={project ? project.slug : "intro"}
+            layout="position"
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 18 }}
+            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            className="pointer-events-auto flex items-center gap-2"
+          >
+            {tiles}
+          </motion.div>
+        </AnimatePresence>
+        <AnimatePresence>
+          {showMobileClose && (
+            <motion.div
+              key="close"
+              layout="position"
+              initial={{ opacity: 0, scale: 0.8, x: 16 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              exit={{ opacity: 0, scale: 0.8, x: 16 }}
+              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="pointer-events-auto"
+            >
+              <CloseButton onClick={close} className="grid" />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {flight?.to && <Flyer flight={flight} onDone={() => setFlight(null)} />}
