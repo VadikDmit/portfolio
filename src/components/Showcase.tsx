@@ -162,12 +162,12 @@ function PageTile({
   );
 }
 
-function TileClose({ onClick }: { onClick: () => void }) {
+function TileClose({ onClick, label = "Закрыть контакты" }: { onClick: () => void; label?: string }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      aria-label="Закрыть контакты"
+      aria-label={label}
       data-cursor="hover"
       className="grid h-[72px] w-[72px] place-items-center rounded-[20px] bg-black transition-opacity duration-300 hover:opacity-70"
       style={{ animation: "tile-in 600ms var(--ease-out) both" }}
@@ -398,9 +398,9 @@ export default function Showcase({
   const opening = flight?.kind === "open";
   const closing = flight?.kind === "close";
 
-  const showMobileClose = !contact && ((project && !opening) || page === "about");
+  const showMobileClose = !contact && project && !opening;
 
-  const tiles = project ? (
+  const renderTiles = (mobile: boolean) => project ? (
     <>
                     {project.figmaUrl && (
                       <IconTile href={project.figmaUrl} label="Проект в Figma" src="/icons/figma.svg" />
@@ -411,7 +411,11 @@ export default function Showcase({
     </>
   ) : (
     <>
-                    <PageTile href="/about" label="About" src="/icons/user.svg" onClick={() => openPage("about")} />
+                    {mobile && page === "about" && !contact ? (
+                      <TileClose onClick={close} label="Закрыть About" />
+                    ) : (
+                      <PageTile href="/about" label="About" src="/icons/user.svg" onClick={() => openPage("about")} />
+                    )}
                     <AnimatePresence mode="wait" initial={false}>
                       {contact ? (
                         <motion.div
@@ -480,7 +484,7 @@ export default function Showcase({
                   >
                     {project.listCategory ?? project.category}
                   </p>
-                  <div className="mt-12 hidden items-center gap-2 md:flex">{tiles}</div>
+                  <div className="mt-12 hidden items-center gap-2 md:flex">{renderTiles(false)}</div>
                 </>
               ) : (
                 <>
@@ -496,7 +500,7 @@ export default function Showcase({
                   >
                     Vibe Coding · Tilda
                   </p>
-                  <div className="mt-12 hidden items-center gap-2 md:flex">{tiles}</div>
+                  <div className="mt-12 hidden items-center gap-2 md:flex">{renderTiles(false)}</div>
                 </>
               )}
             </motion.div>
@@ -579,7 +583,7 @@ export default function Showcase({
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
             className="pointer-events-auto flex items-center gap-2"
           >
-            {tiles}
+            {renderTiles(true)}
           </motion.div>
         </AnimatePresence>
         <AnimatePresence>
