@@ -31,6 +31,7 @@
 
 html {
   background: var(--color-bg);
+  overflow-anchor: none;
 }
 
 body {
@@ -102,5 +103,12 @@ button:focus-visible {
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* Mobile home: vertical project list gently snaps to the next project */
+@media (max-width: 767px) {
+  html[data-snap="on"] {
+    scroll-snap-type: y proximity;
   }
 }

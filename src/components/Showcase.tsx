@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
@@ -404,6 +404,15 @@ export default function Showcase({
     };
   }, []);
 
+  // Snap scrolling is only for the home project list, not for open project/About screens.
+  useLayoutEffect(() => {
+    const root = document.documentElement;
+    root.dataset.snap = project || page ? "off" : "on";
+    return () => {
+      delete root.dataset.snap;
+    };
+  }, [project, page]);
+
   useEffect(() => {
     document.title = project
       ? `${project.title} — Вадим Дмитриев`
@@ -552,7 +561,7 @@ export default function Showcase({
             <div
               className={
                 project || page === "about"
-                  ? "max-md:invisible max-md:h-0 max-md:overflow-hidden md:invisible"
+                  ? "max-md:hidden md:invisible"
                   : ""
               }
               style={
@@ -575,7 +584,7 @@ export default function Showcase({
             {project && (
               <div
                 ref={frameRef}
-                className="relative overflow-hidden rounded-[24px] max-md:aspect-[4/5]"
+                className="relative overflow-hidden rounded-[24px] max-md:aspect-square"
                 style={{ visibility: opening ? "hidden" : "visible" }}
               >
                 <div className="absolute inset-0">
