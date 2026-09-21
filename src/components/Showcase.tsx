@@ -182,7 +182,7 @@ function TileClose({
     >
       <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden>
         <path
-          d={back ? "M14 8H2.5M7.5 3L2.5 8l5 5" : "M3 3l10 10M13 3L3 13"}
+          d={back ? "M10 3L5 8l5 5" : "M3 3l10 10M13 3L3 13"}
           stroke="white"
           strokeWidth="1.5"
           strokeLinecap="round"
