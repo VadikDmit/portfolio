@@ -216,10 +216,10 @@ button:focus-visible {
     animation: intro-shift 700ms cubic-bezier(0.32, 0, 0, 1) 1450ms both;
   }
   .intro-tile {
-    animation: showcase-fade 700ms cubic-bezier(0.32, 0, 0, 1) 2200ms both;
+    animation: showcase-fade 800ms cubic-bezier(0.32, 0, 0, 1) 2200ms both;
   }
   .intro-logo {
-    animation: showcase-fade 700ms cubic-bezier(0.32, 0, 0, 1) 2200ms backwards;
+    animation: showcase-fade 800ms cubic-bezier(0.32, 0, 0, 1) 2200ms backwards;
   }
   .intro-card {
     animation: card-up 800ms cubic-bezier(0.32, 0, 0, 1) 2200ms both;
