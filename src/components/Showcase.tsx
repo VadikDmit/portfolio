@@ -73,7 +73,13 @@ function closeTarget(slug: string): Rect | null {
       left: p.left,
       width: p.width,
       height: p.height,
-      top: rowRect.top + rowRect.height / 2 - p.height / 2,
+      top: (() => {
+        const list = row.closest("ul")?.getBoundingClientRect();
+        const center = rowRect.top + rowRect.height / 2;
+        return list
+          ? Math.min(Math.max(center - p.height / 2, list.top), list.bottom - p.height)
+          : center - p.height / 2;
+      })(),
     };
   }
 
