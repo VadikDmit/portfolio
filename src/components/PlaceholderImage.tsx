@@ -32,7 +32,8 @@ export default function PlaceholderImage({
           src={src}
           alt={label ?? ""}
           fill
-          sizes="(max-width: 768px) 50vw, 400px"
+          sizes="(max-width: 768px) 100vw, 640px"
+          loading="eager"
           className="object-cover"
         />
       </div>

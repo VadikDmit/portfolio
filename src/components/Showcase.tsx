@@ -439,19 +439,33 @@ export default function Showcase({
                   </p>
                   <div className="mt-12 flex items-center gap-2">
                     <PageTile href="/about" label="About" src="/icons/user.svg" onClick={() => openPage("about")} />
-                    {page === "contact" ? (
-                      <>
-                        <TileClose onClick={close} />
-                        <div style={{ animation: "tile-in 600ms var(--ease-out) 100ms both" }}>
-                          <IconTile href={`mailto:${EMAIL}`} label="Написать на почту" src="/icons/mail.svg" sameTab />
-                        </div>
-                        <div style={{ animation: "tile-in 600ms var(--ease-out) 200ms both" }}>
-                          <IconTile href={TELEGRAM_URL} label="Написать в Telegram" src="/icons/telegram_line.svg" />
-                        </div>
-                      </>
-                    ) : (
-                      <PageTile href="/contact" label="Contact" src="/icons/chat_1_line.svg" onClick={() => openPage("contact")} />
-                    )}
+                    <AnimatePresence mode="wait" initial={false}>
+                      {page === "contact" ? (
+                        <motion.div
+                          key="contact"
+                          className="flex items-center gap-2"
+                          exit={{ opacity: 0, x: -14, scale: 0.9 }}
+                          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                          <TileClose onClick={close} />
+                          <div style={{ animation: "tile-in 600ms var(--ease-out) 100ms both" }}>
+                            <IconTile href={`mailto:${EMAIL}`} label="Написать на почту" src="/icons/mail.svg" sameTab />
+                          </div>
+                          <div style={{ animation: "tile-in 600ms var(--ease-out) 200ms both" }}>
+                            <IconTile href={TELEGRAM_URL} label="Написать в Telegram" src="/icons/telegram_line.svg" />
+                          </div>
+                        </motion.div>
+                      ) : (
+                        <motion.div
+                          key="chat"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <PageTile href="/contact" label="Contact" src="/icons/chat_1_line.svg" onClick={() => openPage("contact")} />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </>
               )}
@@ -491,6 +505,28 @@ export default function Showcase({
               <div className="flex flex-col" style={{ animation: "showcase-fade 400ms both" }}>
                 <CloseButton onClick={close} className="mb-4 grid self-start md:hidden" />
                 <AboutPanels className="md:flex-1" />
+              </div>
+            )}
+
+            {project && (
+              <div
+                ref={frameRef}
+                className="relative overflow-hidden rounded-[24px] max-md:aspect-[4/5]"
+                style={{ visibility: opening ? "hidden" : "visible" }}
+              >
+                <div className="absolute inset-0">
+                  <PlaceholderImage
+                    tone={project.tone}
+                    label={project.title}
+                    src={project.cover || undefined}
+                  />
+                </div>
+                {!opening && (
+                  <CloseButton
+                    onClick={close}
+                    className="absolute left-3 top-3 grid md:hidden"
+                  />
+                )}
               </div>
             )}
           </div>
