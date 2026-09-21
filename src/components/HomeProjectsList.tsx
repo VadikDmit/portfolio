@@ -16,10 +16,10 @@ type HomeProjectsListProps = {
   intro?: boolean;
 };
 
-const DIMMED = { opacity: 0.22, filter: "grayscale(1)" } as const;
+const DIM_COLOR = "#e5e5e1";
 
-// Mobile: the project nearest the viewport centre is in full colour; the others fade to light
-// grey and lose their title. Driven directly by scroll position so it stays perfectly smooth.
+// Mobile: the project nearest the viewport centre shows its picture; the others are covered by
+// a solid light-grey fill and lose their title. Driven directly by scroll position so it stays perfectly smooth.
 function MobileCarousel({ projects, onOpen, intro }: HomeProjectsListProps) {
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -34,16 +34,18 @@ function MobileCarousel({ projects, onOpen, intro }: HomeProjectsListProps) {
       const center = window.innerHeight / 2;
       root.querySelectorAll<HTMLElement>("[data-project-row]").forEach((row) => {
         const thumb = row.querySelector<HTMLElement>("[data-project-thumb]");
+        const cover = row.querySelector<HTMLElement>("[data-project-dim]");
         const title = row.querySelector<HTMLElement>("[data-project-title]");
-        if (!thumb || !title) return;
+        if (!thumb || !cover || !title) return;
         const rect = thumb.getBoundingClientRect();
-        const range = rect.height * 0.8;
-        const t = Math.max(0, 1 - Math.abs(rect.top + rect.height / 2 - center) / range);
+        const dead = rect.height * 0.15;
+        const range = rect.height * 0.75;
+        const dist = Math.max(0, Math.abs(rect.top + rect.height / 2 - center) - dead);
+        const t = Math.max(0, 1 - dist / range);
         const eased = t * t * (3 - 2 * t);
-        thumb.style.opacity = String(DIMMED.opacity + (1 - DIMMED.opacity) * eased);
-        thumb.style.filter = `grayscale(${1 - eased})`;
-        title.style.opacity = String(Math.max(0, (eased - 0.45) / 0.55));
-        title.style.transform = `translateY(${(1 - eased) * -8}px)`;
+        cover.style.opacity = String(1 - eased);
+        title.style.opacity = String(Math.max(0, (eased - 0.2) / 0.8));
+        title.style.transform = `translateY(${(1 - eased) * -10}px)`;
       });
     };
     const schedule = () => {
@@ -82,14 +84,22 @@ function MobileCarousel({ projects, onOpen, intro }: HomeProjectsListProps) {
           <div
             data-project-thumb
             className="relative aspect-square w-full overflow-hidden rounded-[24px]"
-            style={i === 0 ? undefined : DIMMED}
           >
             <PlaceholderImage tone={project.tone} label={project.title} src={project.cover || undefined} />
+            <div
+              data-project-dim
+              aria-hidden
+              className="absolute inset-0"
+              style={{ background: DIM_COLOR, opacity: i === 0 ? 0 : 1 }}
+            />
           </div>
           <p
             data-project-title
             className="mt-5 text-center text-[clamp(1.25rem,5.5vw,1.75rem)] leading-tight font-medium tracking-tight"
-            style={i === 0 ? undefined : { opacity: 0 }}
+            style={{
+              opacity: i === 0 ? 1 : 0,
+              transition: "opacity 600ms cubic-bezier(0.32, 0, 0, 1), transform 600ms cubic-bezier(0.32, 0, 0, 1)",
+            }}
           >
             {project.title}
           </p>

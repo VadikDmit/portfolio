@@ -219,7 +219,10 @@ button:focus-visible {
     animation: showcase-fade 800ms cubic-bezier(0.32, 0, 0, 1) 2200ms both;
   }
   .intro-logo {
-    animation: logo-scale 800ms cubic-bezier(0.32, 0, 0, 1) 2200ms backwards;
+    animation: showcase-fade 800ms cubic-bezier(0.32, 0, 0, 1) 2200ms backwards;
+  }
+  .intro-reveal {
+    animation: title-scale 1000ms cubic-bezier(0.32, 0, 0, 1) var(--d, 0ms) both;
   }
   .intro-card {
     animation: card-up 800ms cubic-bezier(0.32, 0, 0, 1) 2200ms both;
@@ -229,7 +232,7 @@ button:focus-visible {
   }
 }
 
-@keyframes logo-scale {
+@keyframes title-scale {
   from {
     opacity: 0;
     transform: scale(0.5);
