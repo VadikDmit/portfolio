@@ -14,8 +14,8 @@ type Page = "about" | "contact";
 type Rect = { top: number; left: number; width: number; height: number };
 type Flight = { project: Project; kind: "open" | "close"; from: Rect; to: Rect | null };
 
-const EMAIL = "hello@vadimdmitriev.com";
-const TELEGRAM_URL = "#";
+const EMAIL = "mr.dzoker@yandex.ru";
+const TELEGRAM_URL = "https://t.me/VadikD";
 
 const OPEN_MS = 750;
 const CLOSE_MS = 600;
