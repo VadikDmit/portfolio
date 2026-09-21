@@ -17,7 +17,7 @@ type HomeProjectsListProps = {
 
 function MobileCarousel({ projects, onOpen }: HomeProjectsListProps) {
   return (
-    <div className="flex flex-col gap-12 md:hidden">
+    <div className="flex flex-col gap-24 md:hidden">
       {projects.map((project) => (
         <Link
           key={project.slug}
