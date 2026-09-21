@@ -10,7 +10,7 @@ import PlaceholderImage from "./PlaceholderImage";
 import ProjectPanels from "./ProjectPanels";
 import { AboutPanels } from "./PagePanels";
 
-type Page = "about" | "contact";
+type Page = "about";
 type Rect = { top: number; left: number; width: number; height: number };
 type Flight = { project: Project; kind: "open" | "close"; from: Rect; to: Rect | null };
 
@@ -205,12 +205,14 @@ export default function Showcase({
   initialPage,
 }: {
   initialSlug?: string;
-  initialPage?: Page;
+  initialPage?: Page | "contact";
 }) {
   const [slug, setSlug] = useState<string | null>(initialSlug ?? null);
-  const [page, setPage] = useState<Page | null>(initialPage ?? null);
+  const [page, setPage] = useState<Page | null>(initialPage === "about" ? "about" : null);
+  const [contact, setContact] = useState(initialPage === "contact");
+  const contactRef = useRef(initialPage === "contact");
   const [pageSeen, setPageSeen] = useState(false);
-  const pageRef = useRef<Page | null>(initialPage ?? null);
+  const pageRef = useRef<Page | null>(initialPage === "about" ? "about" : null);
   const [flight, setFlight] = useState<Flight | null>(null);
   const slugRef = useRef<string | null>(initialSlug ?? null);
   const frameRef = useRef<HTMLDivElement>(null);
@@ -230,6 +232,8 @@ export default function Showcase({
       if (window.innerWidth < 768 || !from) window.scrollTo(0, 0);
       const fromRect = from && animate ? toRect(from) : null;
 
+      contactRef.current = false;
+      setContact(false);
       flushSync(() => {
         slugRef.current = next;
         setSlug(next);
@@ -293,6 +297,12 @@ export default function Showcase({
     showPage(next);
   };
 
+  // Contacts only toggle the tile row on the left; the right side and URL stay put.
+  const toggleContact = (next: boolean) => {
+    contactRef.current = next;
+    setContact(next);
+  };
+
   const openFromList = (target: Project, from: DOMRect) => {
     if (flight) return;
     window.history.pushState(
@@ -324,22 +334,29 @@ export default function Showcase({
     }
   };
 
-  const latest = useRef({ transition, close, showPage });
+  const goHome = () => {
+    toggleContact(false);
+    if (flight) return;
+    if (slugRef.current || pageRef.current) close();
+    else window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const latest = useRef({ transition, close, showPage, toggleContact, goHome });
   useEffect(() => {
-    latest.current = { transition, close, showPage };
+    latest.current = { transition, close, showPage, toggleContact, goHome };
   });
 
   useEffect(() => {
     const onPop = () => {
       const path = window.location.pathname;
-      const pageMatch = path.match(/^\/(about|contact)\/?$/);
-      if (pageMatch) {
+      if (/^\/about\/?$/.test(path)) {
         latest.current.transition(null);
-        latest.current.showPage(pageMatch[1] as Page);
+        latest.current.showPage("about");
         return;
       }
       latest.current.showPage(null);
-      if (path === "/") {
+      if (path === "/" || /^\/contact\/?$/.test(path)) {
+        latest.current.toggleContact(/^\/contact/.test(path));
         latest.current.transition(null);
         return;
       }
@@ -347,11 +364,16 @@ export default function Showcase({
       if (match && getProjectBySlug(match[1])) latest.current.transition(match[1]);
     };
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && (slugRef.current || pageRef.current)) latest.current.close();
+      if (e.key !== "Escape") return;
+      if (contactRef.current) latest.current.toggleContact(false);
+      else if (slugRef.current || pageRef.current) latest.current.close();
     };
+    const onHome = () => latest.current.goHome();
     window.addEventListener("popstate", onPop);
     window.addEventListener("keydown", onKey);
+    window.addEventListener("showcase:home", onHome);
     return () => {
+      window.removeEventListener("showcase:home", onHome);
       window.removeEventListener("popstate", onPop);
       window.removeEventListener("keydown", onKey);
     };
@@ -369,7 +391,7 @@ export default function Showcase({
     document.title = project
       ? `${project.title} — Вадим Дмитриев`
       : page
-        ? `${page === "about" ? "About" : "Contact"} — Вадим Дмитриев`
+        ? "About — Вадим Дмитриев"
         : "Вадим Дмитриев — UX/UI Designer | Vibe Coding";
   }, [project, page]);
 
@@ -440,14 +462,14 @@ export default function Showcase({
                   <div className="mt-12 flex items-center gap-2">
                     <PageTile href="/about" label="About" src="/icons/user.svg" onClick={() => openPage("about")} />
                     <AnimatePresence mode="wait" initial={false}>
-                      {page === "contact" ? (
+                      {contact ? (
                         <motion.div
                           key="contact"
                           className="flex items-center gap-2"
                           exit={{ opacity: 0, x: -14, scale: 0.9 }}
                           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                         >
-                          <TileClose onClick={close} />
+                          <TileClose onClick={() => toggleContact(false)} />
                           <div style={{ animation: "tile-in 600ms var(--ease-out) 100ms both" }}>
                             <IconTile href={`mailto:${EMAIL}`} label="Написать на почту" src="/icons/mail.svg" sameTab />
                           </div>
@@ -462,7 +484,7 @@ export default function Showcase({
                           animate={{ opacity: 1 }}
                           transition={{ duration: 0.3 }}
                         >
-                          <PageTile href="/contact" label="Contact" src="/icons/chat_1_line.svg" onClick={() => openPage("contact")} />
+                          <PageTile href="/contact" label="Contact" src="/icons/chat_1_line.svg" onClick={() => toggleContact(true)} />
                         </motion.div>
                       )}
                     </AnimatePresence>
