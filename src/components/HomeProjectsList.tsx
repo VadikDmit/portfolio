@@ -15,6 +15,64 @@ type HomeProjectsListProps = {
   onOpen: (project: Project, from: DOMRect) => void;
 };
 
+function MobileCarousel({ projects, onOpen }: HomeProjectsListProps) {
+  const scroller = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+
+  const handleScroll = () => {
+    const el = scroller.current;
+    if (!el || !el.clientWidth) return;
+    const slide = el.firstElementChild as HTMLElement | null;
+    const step = slide ? slide.offsetWidth + 16 : el.clientWidth;
+    setActive(Math.max(0, Math.min(projects.length - 1, Math.round(el.scrollLeft / step))));
+  };
+
+  return (
+    <div className="md:hidden">
+      <div
+        ref={scroller}
+        onScroll={handleScroll}
+        className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {projects.map((project) => (
+          <Link
+            key={project.slug}
+            href={`/projects/${project.slug}`}
+            data-project-row={project.slug}
+            onClick={(e) => {
+              if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+              e.preventDefault();
+              const thumb = e.currentTarget.querySelector<HTMLElement>("[data-project-thumb]");
+              onOpen(project, (thumb ?? e.currentTarget).getBoundingClientRect());
+            }}
+            className="block w-full shrink-0 snap-center"
+          >
+            <div
+              data-project-thumb
+              className="relative aspect-[4/5] w-full overflow-hidden rounded-[24px]"
+            >
+              <PlaceholderImage tone={project.tone} label={project.title} src={project.cover || undefined} />
+            </div>
+            <p className="mt-5 text-center text-[clamp(1.25rem,5.5vw,1.75rem)] leading-tight font-medium tracking-tight">
+              {project.title}
+            </p>
+          </Link>
+        ))}
+      </div>
+
+      <div className="mt-5 flex justify-center gap-2" aria-hidden>
+        {projects.map((project, i) => (
+          <span
+            key={project.slug}
+            className="h-1.5 w-1.5 rounded-full transition-opacity duration-300"
+            style={{ background: "var(--color-fg)", opacity: i === active ? 1 : 0.2 }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function HomeProjectsList({ projects, onOpen }: HomeProjectsListProps) {
   const [hovered, setHovered] = useState<Project | null>(null);
   const [previewY, setPreviewY] = useState(0);
@@ -50,7 +108,7 @@ export default function HomeProjectsList({ projects, onOpen }: HomeProjectsListP
 
   return (
     <div>
-      <ul>
+      <ul className="max-md:hidden">
         {projects.map((project) => {
           const isHovered = hovered?.slug === project.slug;
           const isDimmed = hovered !== null && !isHovered;
@@ -81,13 +139,6 @@ export default function HomeProjectsList({ projects, onOpen }: HomeProjectsListP
                     {project.title}
                   </span>
 
-                  {/* Mobile-only inline thumbnail, no hover dependency */}
-                  <span
-                    data-project-thumb
-                    className="sm:hidden shrink-0 w-16 h-20 overflow-hidden rounded-[24px]"
-                  >
-                    <PlaceholderImage tone={project.tone} label={project.title} src={project.cover || undefined} />
-                  </span>
                 </span>
 
                 <span
@@ -101,6 +152,8 @@ export default function HomeProjectsList({ projects, onOpen }: HomeProjectsListP
           );
         })}
       </ul>
+
+      <MobileCarousel projects={projects} onOpen={onOpen} />
 
       {showFloatingPreview && (
         <div

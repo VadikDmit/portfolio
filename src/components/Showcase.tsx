@@ -41,7 +41,9 @@ const prefersReducedMotion = () =>
 const historyDepth = () => (window.history.state?.showcaseDepth as number | undefined) ?? 0;
 
 function closeTarget(slug: string): Rect | null {
-  const row = document.querySelector<HTMLElement>(`[data-project-row="${slug}"]`);
+  const row = [
+    ...document.querySelectorAll<HTMLElement>(`[data-project-row="${slug}"]`),
+  ].find((r) => r.offsetParent);
   if (!row) return null;
   const rowRect = row.getBoundingClientRect();
 
@@ -546,9 +548,13 @@ export default function Showcase({
             project ? "max-md:order-1" : "max-md:order-2"
           }`}
         >
-          <div className="grid w-full [&>*]:col-start-1 [&>*]:row-start-1">
+          <div className="grid w-full grid-cols-[minmax(0,1fr)] [&>*]:col-start-1 [&>*]:row-start-1">
             <div
-              className={project || page === "about" ? "max-md:hidden md:invisible" : ""}
+              className={
+                project || page === "about"
+                  ? "max-md:invisible max-md:h-0 max-md:overflow-hidden md:invisible"
+                  : ""
+              }
               style={
                 closing
                   ? { animation: "showcase-fade 500ms 200ms both" }
