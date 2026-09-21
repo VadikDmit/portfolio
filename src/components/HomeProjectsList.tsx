@@ -13,12 +13,13 @@ const PREVIEW_HEIGHT = 280;
 type HomeProjectsListProps = {
   projects: Project[];
   onOpen: (project: Project, from: DOMRect) => void;
+  intro?: boolean;
 };
 
-function MobileCarousel({ projects, onOpen }: HomeProjectsListProps) {
+function MobileCarousel({ projects, onOpen, intro }: HomeProjectsListProps) {
   return (
     <div className="flex flex-col gap-24 md:hidden">
-      {projects.map((project) => (
+      {projects.map((project, i) => (
         <Link
           key={project.slug}
           href={`/projects/${project.slug}`}
@@ -29,7 +30,8 @@ function MobileCarousel({ projects, onOpen }: HomeProjectsListProps) {
             const thumb = e.currentTarget.querySelector<HTMLElement>("[data-project-thumb]");
             onOpen(project, (thumb ?? e.currentTarget).getBoundingClientRect());
           }}
-          className="block snap-center"
+          className={`block snap-center ${intro ? "intro-card" : ""}`}
+          style={{ "--i": i } as React.CSSProperties}
         >
           <div
             data-project-thumb
@@ -46,7 +48,7 @@ function MobileCarousel({ projects, onOpen }: HomeProjectsListProps) {
   );
 }
 
-export default function HomeProjectsList({ projects, onOpen }: HomeProjectsListProps) {
+export default function HomeProjectsList({ projects, onOpen, intro }: HomeProjectsListProps) {
   const [hovered, setHovered] = useState<Project | null>(null);
   const [previewY, setPreviewY] = useState(0);
   const previewRef = useRef<HTMLDivElement>(null);
@@ -82,15 +84,15 @@ export default function HomeProjectsList({ projects, onOpen }: HomeProjectsListP
   return (
     <div>
       <ul className="max-md:hidden">
-        {projects.map((project) => {
+        {projects.map((project, i) => {
           const isHovered = hovered?.slug === project.slug;
           const isDimmed = hovered !== null && !isHovered;
 
           return (
             <li
               key={project.slug}
-              className="border-t"
-              style={{ borderColor: "var(--color-border)" }}
+              className={`border-t ${intro ? "intro-row" : ""}`}
+              style={{ borderColor: "var(--color-border)", "--i": i } as React.CSSProperties}
             >
               <Link
                 href={`/projects/${project.slug}`}
@@ -126,7 +128,7 @@ export default function HomeProjectsList({ projects, onOpen }: HomeProjectsListP
         })}
       </ul>
 
-      <MobileCarousel projects={projects} onOpen={onOpen} />
+      <MobileCarousel projects={projects} onOpen={onOpen} intro={intro} />
 
       {showFloatingPreview && (
         <div

@@ -607,9 +607,7 @@ export default function Showcase({
               className={
                 project || page === "about"
                   ? "max-md:hidden md:invisible"
-                  : playIntro
-                    ? "intro-list"
-                    : ""
+                  : ""
               }
               style={
                 closing
@@ -619,7 +617,7 @@ export default function Showcase({
                     : undefined
               }
             >
-              <HomeProjectsList projects={projects} onOpen={openFromList} />
+              <HomeProjectsList projects={projects} onOpen={openFromList} intro={playIntro && !project && !page} />
             </div>
 
             {page === "about" && (

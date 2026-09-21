@@ -153,8 +153,9 @@ button:focus-visible {
   }
 }
 
-/* Home intro. Desktop: text 80ms, buttons 360ms, projects 1360ms. Mobile: title centered,
-   glides up, then logo / buttons / projects appear together. */
+/* Home intro. Desktop: title 80ms, then buttons and projects together from 1360ms (projects
+   drop in top to bottom). Mobile: title centered, glides up, then logo / buttons fade in and
+   the first project drops down while the next ones rise from below. */
 @keyframes intro-shift {
   from {
     transform: translateY(var(--intro-shift, 0px));
@@ -164,16 +165,47 @@ button:focus-visible {
   }
 }
 
+@keyframes row-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes card-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-80px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes card-up {
+  from {
+    opacity: 0;
+    transform: translateY(90px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .intro-reveal {
   animation: intro-mask 1200ms cubic-bezier(0.32, 0, 0, 1) var(--d, 0ms) both;
 }
 .intro-tile {
-  animation: tile-rise 720ms cubic-bezier(0.32, 0, 0, 1) calc(360ms + var(--i, 0) * 80ms) both;
+  animation: tile-rise 720ms cubic-bezier(0.32, 0, 0, 1) calc(1360ms + var(--i, 0) * 80ms) both;
 }
-.intro-list {
-  animation:
-    list-rise 1200ms cubic-bezier(0.32, 0, 0, 1) 1360ms both,
-    showcase-fade 700ms cubic-bezier(0.32, 0, 0, 1) 1360ms both;
+.intro-row {
+  animation: row-drop 900ms cubic-bezier(0.32, 0, 0, 1) calc(1360ms + var(--i, 0) * 90ms) both;
 }
 .intro-logo {
   animation: logo-in 800ms cubic-bezier(0.32, 0, 0, 1) 80ms backwards;
@@ -183,13 +215,16 @@ button:focus-visible {
   .intro-shift {
     animation: intro-shift 700ms cubic-bezier(0.32, 0, 0, 1) 1450ms both;
   }
-  .intro-tile,
-  .intro-list,
-  .intro-logo {
-    animation: tile-rise 800ms cubic-bezier(0.32, 0, 0, 1) 2200ms both;
+  .intro-tile {
+    animation: showcase-fade 700ms cubic-bezier(0.32, 0, 0, 1) 2200ms both;
   }
   .intro-logo {
-    animation-name: logo-in;
-    animation-fill-mode: backwards;
+    animation: showcase-fade 700ms cubic-bezier(0.32, 0, 0, 1) 2200ms backwards;
+  }
+  .intro-card {
+    animation: card-up 800ms cubic-bezier(0.32, 0, 0, 1) 2200ms both;
+  }
+  .intro-card:first-child {
+    animation: card-drop 500ms cubic-bezier(0.32, 0, 0, 1) 2200ms both;
   }
 }
