@@ -1,11 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function Nav() {
   const pathname = usePathname();
+  const [intro] = useState(() => pathname === "/");
   const onShowcase =
     pathname === "/" ||
     pathname === "/about" ||
@@ -30,8 +32,7 @@ export default function Nav() {
             e.preventDefault();
             window.dispatchEvent(new Event("showcase:home"));
           }}
-          className="pointer-events-auto transition-opacity duration-300 hover:opacity-70"
-          style={{ animation: "logo-in 800ms cubic-bezier(0.32, 0, 0, 1) 80ms backwards" }}
+          className={`pointer-events-auto transition-opacity duration-300 hover:opacity-70 ${intro ? "intro-logo" : ""}`}
         >
           <Image src="/logo.svg" alt="Вадим Дмитриев" width={133} height={29} priority />
         </Link>
