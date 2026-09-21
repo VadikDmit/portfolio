@@ -169,10 +169,11 @@ function TileClose({ onClick }: { onClick: () => void }) {
       onClick={onClick}
       aria-label="Закрыть контакты"
       data-cursor="hover"
-      className="grid h-[72px] w-[72px] place-items-center rounded-[20px] bg-white transition-opacity duration-300 hover:opacity-70"
+      className="grid h-[72px] w-[72px] place-items-center rounded-[20px] bg-black transition-opacity duration-300 hover:opacity-70"
+      style={{ animation: "tile-in 600ms var(--ease-out) both" }}
     >
       <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden>
-        <path d="M3 3l10 10M13 3L3 13" stroke="black" strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M3 3l10 10M13 3L3 13" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
     </button>
   );
@@ -441,8 +442,10 @@ export default function Showcase({
                     {page === "contact" ? (
                       <>
                         <TileClose onClick={close} />
-                        <div className="flex gap-2" style={{ animation: "showcase-fade 400ms both" }}>
+                        <div style={{ animation: "tile-in 600ms var(--ease-out) 100ms both" }}>
                           <IconTile href={`mailto:${EMAIL}`} label="Написать на почту" src="/icons/mail.svg" sameTab />
+                        </div>
+                        <div style={{ animation: "tile-in 600ms var(--ease-out) 200ms both" }}>
                           <IconTile href={TELEGRAM_URL} label="Написать в Telegram" src="/icons/telegram_line.svg" />
                         </div>
                       </>
