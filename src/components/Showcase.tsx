@@ -186,9 +186,9 @@ function CloseButton({ onClick, className }: { onClick: () => void; className: s
       onClick={onClick}
       aria-label="Закрыть"
       data-cursor="hover"
-      className={`h-11 w-11 place-items-center rounded-[14px] bg-white transition-opacity duration-300 hover:opacity-70 ${className}`}
+      className={`h-[72px] w-[72px] place-items-center rounded-[20px] bg-white transition-opacity duration-300 hover:opacity-70 ${className}`}
     >
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden>
         <path
           d="M3 3l10 10M13 3L3 13"
           stroke="black"
@@ -499,7 +499,7 @@ export default function Showcase({
         {((project && !opening) || page === "about") && (
           <CloseButton
             onClick={close}
-            className="hidden md:grid md:col-start-6 md:row-start-1 md:row-span-2 md:self-start md:justify-self-end md:-mr-11 md:sticky md:top-[100px] md:z-10"
+            className="hidden md:grid md:col-start-6 md:row-start-1 md:row-span-2 md:self-start md:justify-self-end md:-mr-[72px] md:sticky md:top-[100px] md:z-10"
           />
         )}
 
@@ -546,7 +546,7 @@ export default function Showcase({
                 {!opening && (
                   <CloseButton
                     onClick={close}
-                    className="absolute left-3 top-3 grid md:hidden"
+                    className="absolute left-4 top-4 grid md:hidden"
                   />
                 )}
               </div>
