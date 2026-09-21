@@ -10,10 +10,6 @@ import PlaceholderImage from "./PlaceholderImage";
 const PREVIEW_WIDTH = 280;
 const PREVIEW_HEIGHT = 280;
 
-// Keep the preview inside the list's vertical extent so it never sticks out of the content area.
-export const clampPreviewTop = (rowCenter: number, list: DOMRect) =>
-  Math.min(Math.max(rowCenter - PREVIEW_HEIGHT / 2, list.top), list.bottom - PREVIEW_HEIGHT);
-
 type HomeProjectsListProps = {
   projects: Project[];
   onOpen: (project: Project, from: DOMRect) => void;
@@ -123,9 +119,7 @@ export default function HomeProjectsList({ projects, onOpen, intro }: HomeProjec
 
   const handleRowEnter = (project: Project, e: React.MouseEvent<HTMLAnchorElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    const list = e.currentTarget.closest("ul")?.getBoundingClientRect();
-    const center = rect.top + rect.height / 2;
-    setPreviewY(list ? clampPreviewTop(center, list) : center - PREVIEW_HEIGHT / 2);
+    setPreviewY(rect.top + rect.height / 2 - PREVIEW_HEIGHT / 2);
     setHovered(project);
   };
 
