@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Project } from "@/lib/projects";
@@ -16,9 +16,55 @@ type HomeProjectsListProps = {
   intro?: boolean;
 };
 
+const DIMMED = { opacity: 0.22, filter: "grayscale(1)" } as const;
+
+// Mobile: the project nearest the viewport centre is in full colour; the others fade to light
+// grey and lose their title. Driven directly by scroll position so it stays perfectly smooth.
 function MobileCarousel({ projects, onOpen, intro }: HomeProjectsListProps) {
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    let frame = 0;
+
+    const update = () => {
+      frame = 0;
+      if (!root.offsetParent) return;
+      const center = window.innerHeight / 2;
+      root.querySelectorAll<HTMLElement>("[data-project-row]").forEach((row) => {
+        const thumb = row.querySelector<HTMLElement>("[data-project-thumb]");
+        const title = row.querySelector<HTMLElement>("[data-project-title]");
+        if (!thumb || !title) return;
+        const rect = thumb.getBoundingClientRect();
+        const range = rect.height * 0.8;
+        const t = Math.max(0, 1 - Math.abs(rect.top + rect.height / 2 - center) / range);
+        const eased = t * t * (3 - 2 * t);
+        thumb.style.opacity = String(DIMMED.opacity + (1 - DIMMED.opacity) * eased);
+        thumb.style.filter = `grayscale(${1 - eased})`;
+        title.style.opacity = String(Math.max(0, (eased - 0.45) / 0.55));
+        title.style.transform = `translateY(${(1 - eased) * -8}px)`;
+      });
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    const observer = new ResizeObserver(schedule);
+    observer.observe(root);
+    return () => {
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      observer.disconnect();
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return (
-    <div className="flex flex-col gap-24 md:hidden">
+    <div ref={rootRef} className="flex flex-col gap-24 md:hidden">
       {projects.map((project, i) => (
         <Link
           key={project.slug}
@@ -36,10 +82,15 @@ function MobileCarousel({ projects, onOpen, intro }: HomeProjectsListProps) {
           <div
             data-project-thumb
             className="relative aspect-square w-full overflow-hidden rounded-[24px]"
+            style={i === 0 ? undefined : DIMMED}
           >
             <PlaceholderImage tone={project.tone} label={project.title} src={project.cover || undefined} />
           </div>
-          <p className="mt-5 text-center text-[clamp(1.25rem,5.5vw,1.75rem)] leading-tight font-medium tracking-tight">
+          <p
+            data-project-title
+            className="mt-5 text-center text-[clamp(1.25rem,5.5vw,1.75rem)] leading-tight font-medium tracking-tight"
+            style={i === 0 ? undefined : { opacity: 0 }}
+          >
             {project.title}
           </p>
         </Link>
