@@ -629,7 +629,7 @@ export default function Showcase({
             {project && (
               <div
                 ref={frameRef}
-                className="relative overflow-hidden rounded-[24px] max-md:aspect-square"
+                className="relative aspect-square overflow-hidden rounded-[24px]"
                 style={{ visibility: opening ? "hidden" : "visible" }}
               >
                 <div className="absolute inset-0">
