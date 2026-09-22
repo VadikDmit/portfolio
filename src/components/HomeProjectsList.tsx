@@ -215,7 +215,12 @@ export default function HomeProjectsList({ projects, onOpen, intro }: HomeProjec
                 transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                 className="w-full h-full"
               >
-                <PlaceholderImage tone={hovered.tone} label={hovered.title} src={hovered.cover || undefined} />
+                <PlaceholderImage
+                  tone={hovered.tone}
+                  label={hovered.title}
+                  src={hovered.cover || undefined}
+                  video={hovered.previewVideo}
+                />
               </motion.div>
             )}
           </AnimatePresence>

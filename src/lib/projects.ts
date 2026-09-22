@@ -23,6 +23,10 @@ export type Project = {
   description: string;
   role: string[];
   cover: string;
+  /** Optional — looping preview clip (muted, no controls). Used in the hover preview on the
+   *  homepage and, at full size, in the opened project's hero. Same file for both, so export it
+   *  large enough to stay sharp when enlarged (see README for prep guidance). */
+  previewVideo?: string;
   images: string[];
   about: string[];
   /** Optional — only projects with more than one user type render this section. */

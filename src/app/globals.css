@@ -84,6 +84,12 @@ button:focus-visible {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  /* Preview clips (project hover preview / opened hero): freeze on the poster frame instead of
+     looping. */
+  .preview-video {
+    display: none !important;
+  }
 }
 
 @keyframes showcase-fade {

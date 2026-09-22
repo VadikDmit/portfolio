@@ -14,6 +14,9 @@ type PlaceholderImageProps = {
   label?: string;
   className?: string;
   src?: string;
+  /** Optional looping preview clip. Rendered over the cover image, which stays in the DOM as a
+   *  poster/fallback (shown until the video can play, and instead of it under reduced motion). */
+  video?: string;
 };
 
 export default function PlaceholderImage({
@@ -21,7 +24,38 @@ export default function PlaceholderImage({
   label,
   className,
   src,
+  video,
 }: PlaceholderImageProps) {
+  if (video) {
+    return (
+      <div
+        className={className}
+        style={{ width: "100%", height: "100%", position: "relative", overflow: "hidden" }}
+      >
+        {src && (
+          <Image
+            src={src}
+            alt={label ?? ""}
+            fill
+            sizes="(max-width: 768px) 100vw, 1080px"
+            loading="eager"
+            className="object-cover"
+          />
+        )}
+        <video
+          src={video}
+          muted
+          loop
+          playsInline
+          autoPlay
+          preload="auto"
+          aria-hidden
+          className="preview-video absolute inset-0 h-full w-full object-cover"
+        />
+      </div>
+    );
+  }
+
   if (src) {
     return (
       <div
