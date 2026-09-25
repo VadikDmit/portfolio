@@ -67,7 +67,11 @@ export const projects: Project[] = [
       "Дизайн афиши и карточек спектаклей",
       "Адаптивный дизайн",
     ],
-    images: ["/projects/udmteatr/design-desktop.jpg", "/projects/udmteatr/design-mobile.jpg"],
+    images: [
+      "/projects/udmteatr/design-desktop.jpg",
+      "/projects/udmteatr/design-mobile.jpg",
+      "/projects/udmteatr/design-detail.jpg",
+    ],
     about: [
       "Редизайн сайта Государственного национального театра Удмуртской Республики — культурного и одновременно сервисного продукта. Нужно было обновить визуальный образ и упростить путь пользователя от афиши к покупке билета, сохранив национальную идентичность театра.",
     ],

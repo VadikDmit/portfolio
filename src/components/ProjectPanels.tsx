@@ -154,7 +154,11 @@ export default function ProjectPanels({
               />
             </div>
             <div className="aspect-[3/4] overflow-hidden rounded-[24px]">
-              <PlaceholderImage tone={(project.tone + 3) % 6} label={`${project.title} — UI detail`} />
+              <PlaceholderImage
+                tone={(project.tone + 3) % 6}
+                label={`${project.title} — UI detail`}
+                src={project.images[2] || undefined}
+              />
             </div>
           </div>
         </>
