@@ -119,7 +119,11 @@ function Flyer({ flight, onDone }: { flight: Flight; onDone: () => void }) {
       className="pointer-events-none fixed z-[45] overflow-hidden rounded-[24px]"
       style={box(from)}
     >
-      <PlaceholderImage tone={project.tone} label={project.title} src={project.cover || undefined} />
+      <PlaceholderImage
+        tone={project.tone}
+        label={project.title}
+        src={project.previewVideoBackground || project.cover || undefined}
+      />
     </div>
   );
 }
