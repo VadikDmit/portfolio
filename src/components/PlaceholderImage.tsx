@@ -53,7 +53,7 @@ export default function PlaceholderImage({
           autoPlay
           preload="auto"
           aria-hidden
-          className="preview-video absolute top-1/2 left-1/2 w-[82%] -translate-x-1/2 -translate-y-1/2 rounded-[10px] shadow-[0_16px_40px_rgba(0,0,0,0.3)]"
+          className="preview-video absolute top-1/2 left-1/2 w-[82%] -translate-x-1/2 -translate-y-1/2 shadow-[0_16px_40px_rgba(0,0,0,0.3)]"
         />
       </div>
     );
