@@ -638,6 +638,7 @@ export default function Showcase({
                     label={project.title}
                     src={project.cover || undefined}
                     video={project.previewVideo}
+                    videoBackground={project.previewVideoBackground}
                   />
                 </div>
               </div>

@@ -27,6 +27,10 @@ export type Project = {
    *  homepage and, at full size, in the opened project's hero. Same file for both, so export it
    *  large enough to stay sharp when enlarged (see README for prep guidance). */
   previewVideo?: string;
+  /** Optional — set together with `previewVideo` when the clip isn't square (e.g. a real
+   *  browser screen recording). The video is then shown at its own aspect ratio, inset over
+   *  this background image, instead of being cropped to fill the square. */
+  previewVideoBackground?: string;
   images: string[];
   about: string[];
   /** Optional — only projects with more than one user type render this section. */
@@ -53,6 +57,8 @@ export const projects: Project[] = [
     siteUrl: "https://udmteatr.ru/ru",
     description: "Редизайн сайта государственного национального театра Удмуртии",
     cover: "/projects/udmteatr/cover.png",
+    previewVideo: "/projects/udmteatr/preview.mp4",
+    previewVideoBackground: "/projects/udmteatr/preview-bg.png",
     role: [
       "UX/UI design",
       "Информационная архитектура",

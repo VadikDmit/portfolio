@@ -220,6 +220,7 @@ export default function HomeProjectsList({ projects, onOpen, intro }: HomeProjec
                   label={hovered.title}
                   src={hovered.cover || undefined}
                   video={hovered.previewVideo}
+                  videoBackground={hovered.previewVideoBackground}
                 />
               </motion.div>
             )}
