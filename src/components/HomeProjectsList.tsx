@@ -46,6 +46,14 @@ function MobileCarousel({ projects, onOpen, intro }: HomeProjectsListProps) {
         cover.style.opacity = String(1 - eased);
         title.style.opacity = String(Math.max(0, (eased - 0.2) / 0.8));
         title.style.transform = `translateY(${(1 - eased) * -10}px)`;
+
+        // Only the focused card's video actually plays — keeps battery/data use in check as
+        // more projects get clips, and avoids restarting by pausing rather than unmounting.
+        const video = thumb.querySelector("video");
+        if (video) {
+          if (eased > 0.6) video.play().catch(() => {});
+          else video.pause();
+        }
       });
     };
     const schedule = () => {
@@ -85,7 +93,13 @@ function MobileCarousel({ projects, onOpen, intro }: HomeProjectsListProps) {
             data-project-thumb
             className="relative aspect-square w-full overflow-hidden rounded-[24px]"
           >
-            <PlaceholderImage tone={project.tone} label={project.title} src={project.cover || undefined} />
+            <PlaceholderImage
+              tone={project.tone}
+              label={project.title}
+              src={project.cover || undefined}
+              video={project.previewVideo}
+              videoBackground={project.previewVideoBackground}
+            />
             <div
               data-project-dim
               aria-hidden
