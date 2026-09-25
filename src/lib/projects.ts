@@ -53,7 +53,8 @@ export const projects: Project[] = [
     category: "UX/UI Design · Web Design · Redesign",
     listCategory: "UX/UI Design · Redesign",
     year: "2026",
-    figmaUrl: "#",
+    figmaUrl:
+      "https://www.figma.com/design/nGwVPkYQQRF35j36xQ4p21/%D0%A3%D0%B4%D0%BC%D0%A2%D0%B5%D0%B0%D1%82%D1%80?node-id=20-57&t=fC4SnB9GyWp0nDMv-1",
     siteUrl: "https://udmteatr.ru/ru",
     description: "Редизайн сайта государственного национального театра Удмуртии",
     cover: "/projects/udmteatr/cover.png",
