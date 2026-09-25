@@ -139,11 +139,19 @@ export default function ProjectPanels({
       {!project.hideDesignSection && (
         <>
           <div className="aspect-[16/10] overflow-hidden rounded-[24px]">
-            <PlaceholderImage tone={(project.tone + 1) % 6} label={`${project.title} — desktop`} />
+            <PlaceholderImage
+              tone={(project.tone + 1) % 6}
+              label={`${project.title} — desktop`}
+              src={project.images[0] || undefined}
+            />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="aspect-[3/4] overflow-hidden rounded-[24px]">
-              <PlaceholderImage tone={(project.tone + 2) % 6} label={`${project.title} — mobile`} />
+              <PlaceholderImage
+                tone={(project.tone + 2) % 6}
+                label={`${project.title} — mobile`}
+                src={project.images[1] || undefined}
+              />
             </div>
             <div className="aspect-[3/4] overflow-hidden rounded-[24px]">
               <PlaceholderImage tone={(project.tone + 3) % 6} label={`${project.title} — UI detail`} />
