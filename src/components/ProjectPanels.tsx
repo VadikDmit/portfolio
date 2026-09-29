@@ -48,7 +48,7 @@ export default function ProjectPanels({
           {project.description}
         </p>
 
-        <Label className="mt-10 mb-5">About the project</Label>
+        <Label className="mt-10 mb-5">О проекте</Label>
         <div className="space-y-3">
           {project.about.map((paragraph, index) => (
             <p key={index} className="text-[16px] leading-relaxed">
@@ -57,7 +57,7 @@ export default function ProjectPanels({
           ))}
         </div>
 
-        <Label className="mt-10 mb-5">My role</Label>
+        <Label className="mt-10 mb-5">Моя роль</Label>
         <ul className="space-y-2 text-[15px]">
           {project.role.map((item) => (
             <li key={item}>{item}</li>
@@ -67,7 +67,7 @@ export default function ProjectPanels({
 
       {project.audiences && (
         <Panel>
-          <Label className="mb-6">Users</Label>
+          <Label className="mb-6">Пользователи</Label>
           {project.audiences.map((audience) => (
             <div
               key={audience.title}
@@ -87,7 +87,7 @@ export default function ProjectPanels({
       )}
 
       <Panel>
-        <Label className="mb-6">Process</Label>
+        <Label className="mb-6">Процесс</Label>
         {project.processParagraphs
           ? project.processParagraphs.map((step) => (
               <div
@@ -165,7 +165,7 @@ export default function ProjectPanels({
       )}
 
       <Panel>
-        <Label className="mb-5">Result</Label>
+        <Label className="mb-5">Результат</Label>
         <p className="text-[17px] leading-relaxed">{project.result}</p>
       </Panel>
 
@@ -176,7 +176,7 @@ export default function ProjectPanels({
         className="group rounded-[24px] bg-white p-7 md:p-10 text-left"
       >
         <span className="text-[13px]" style={{ color: "var(--color-fg-secondary)" }}>
-          Next project
+          Следующий проект
         </span>
         <span className="mt-3 block text-[clamp(1.5rem,3vw,2.5rem)] leading-none font-medium tracking-tight transition-transform duration-500 group-hover:translate-x-2">
           {next.title} →
