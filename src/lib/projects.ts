@@ -215,7 +215,8 @@ export const projects: Project[] = [
     category: "UX/UI Design · Web Design",
     listCategory: "Сервис доставки",
     year: "2025",
-    figmaUrl: "#",
+    figmaUrl:
+      "https://www.figma.com/design/TTF6pdXdCrnbgkOjYjjW3x/Pena-Pack?node-id=3-90&t=So2H73ymuUfxJRcb-1",
     siteUrl: "https://pena.beer/",
     description: "Сервис для заказа и доставки крафтового пива Pena Pack",
     role: [
