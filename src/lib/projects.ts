@@ -51,7 +51,7 @@ export const projects: Project[] = [
     number: "01",
     title: "Национальный театр УР",
     category: "UX/UI Design · Web Design · Redesign",
-    listCategory: "Театральный web-сайт",
+    listCategory: "Театральный сайт",
     year: "2026",
     figmaUrl:
       "https://www.figma.com/design/nGwVPkYQQRF35j36xQ4p21/%D0%A3%D0%B4%D0%BC%D0%A2%D0%B5%D0%B0%D1%82%D1%80?node-id=20-57&t=fC4SnB9GyWp0nDMv-1",
