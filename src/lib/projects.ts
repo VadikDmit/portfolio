@@ -164,11 +164,11 @@ export const projects: Project[] = [
     number: "03",
     title: "GAYA",
     category: "UX/UI Design · Web Design",
-    listCategory: "Медицинский сайт",
+    listCategory: "Образовательный центр",
     year: "2025",
     figmaUrl: "#",
     siteUrl: "https://gayadentistry.com.br/",
-    description: "Сайт стоматологической клиники в Бразилии",
+    description: "Образовательный центр для стоматологов",
     role: [
       "Брифинг",
       "Конкурентный анализ",
