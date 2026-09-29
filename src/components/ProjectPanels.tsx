@@ -104,19 +104,13 @@ export default function ProjectPanels({
                 </p>
               </div>
             ))
-          : project.process.map((step, index) => (
+          : project.process.map((step) => (
               <div
                 key={step.title}
                 className="border-t pt-5 pb-8 last:pb-0"
                 style={divider}
               >
-                <span
-                  className="text-[13px] tabular-nums"
-                  style={{ color: "var(--color-fg-secondary)" }}
-                >
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3 className="mt-2 text-[19px] font-medium">{step.title}</h3>
+                <h3 className="text-[19px] font-medium">{step.title}</h3>
                 <p
                   className="mt-2 text-[14px]"
                   style={{ color: "var(--color-fg-secondary)" }}
