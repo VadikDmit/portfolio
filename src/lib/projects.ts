@@ -103,11 +103,13 @@ export const projects: Project[] = [
     category: "UX/UI Design · Web Design · Product Design",
     listCategory: "Строительный сервис",
     year: "2025",
-    figmaUrl: "#",
+    figmaUrl:
+      "https://www.figma.com/design/qVPdeDfpr9vs1PKk889Osb/built2measure_Service?node-id=143-295&t=aPOTD7CFRkbf7O8m-1",
     siteUrl: "https://built2measure.com/",
     description: "Сервис для строительных и ремонтных услуг (UK)",
     role: [
       "UX research",
+      "Составление ТЗ после research",
       "Информационная архитектура",
       "User flows",
       "UI design",
@@ -116,7 +118,6 @@ export const projects: Project[] = [
     cover: "",
     images: ["", ""],
     about: [
-      "Built2Measure — сервис для строительных и ремонтных услуг (UK).",
       "Проект разработан для заказчика из Великобритании. Основная задача — создать современную digital-платформу для поиска строительных компаний, подрядчиков и специалистов в сфере ремонта и строительства.",
     ],
     audiences: [
