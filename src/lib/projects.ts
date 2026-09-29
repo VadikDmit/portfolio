@@ -109,7 +109,7 @@ export const projects: Project[] = [
     description: "Сервис для строительных и ремонтных услуг (UK)",
     role: [
       "UX research",
-      "Составление ТЗ после research",
+      "Составление ТЗ",
       "Информационная архитектура",
       "User flows",
       "UI design",
