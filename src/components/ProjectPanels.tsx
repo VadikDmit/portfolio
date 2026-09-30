@@ -140,25 +140,27 @@ export default function ProjectPanels({
               src={project.images[0] || undefined}
             />
           </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="aspect-[3/4] overflow-hidden rounded-[24px]">
-              <PlaceholderImage
-                tone={(project.tone + 2) % 6}
-                label={`${project.title} — mobile`}
-                src={project.images[1] || undefined}
-                video={project.designVideo}
-                videoBackground={project.designVideoBackground}
-                videoBackgroundColor={project.designVideoBackgroundColor}
-              />
+          {!project.hideDesignGrid && (
+            <div className="grid grid-cols-2 gap-3">
+              <div className="aspect-[3/4] overflow-hidden rounded-[24px]">
+                <PlaceholderImage
+                  tone={(project.tone + 2) % 6}
+                  label={`${project.title} — mobile`}
+                  src={project.images[1] || undefined}
+                  video={project.designVideo}
+                  videoBackground={project.designVideoBackground}
+                  videoBackgroundColor={project.designVideoBackgroundColor}
+                />
+              </div>
+              <div className="aspect-[3/4] overflow-hidden rounded-[24px]">
+                <PlaceholderImage
+                  tone={(project.tone + 3) % 6}
+                  label={`${project.title} — UI detail`}
+                  src={project.images[2] || undefined}
+                />
+              </div>
             </div>
-            <div className="aspect-[3/4] overflow-hidden rounded-[24px]">
-              <PlaceholderImage
-                tone={(project.tone + 3) % 6}
-                label={`${project.title} — UI detail`}
-                src={project.images[2] || undefined}
-              />
-            </div>
-          </div>
+          )}
         </>
       )}
 

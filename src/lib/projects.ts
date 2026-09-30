@@ -46,6 +46,8 @@ export type Project = {
   processParagraphs?: ProcessStep[];
   /** Optional — set true to skip the generic 3-image Design section. */
   hideDesignSection?: boolean;
+  /** Optional — keep the wide "desktop" image but skip the 2-up row below it. */
+  hideDesignGrid?: boolean;
   result: string;
   /** Index used to derive a placeholder gradient when no real image exists yet. */
   tone: number;
@@ -242,7 +244,8 @@ export const projects: Project[] = [
       "Дизайн-ревью",
     ],
     cover: "",
-    images: ["", ""],
+    images: ["/projects/project-04/design-desktop.jpg"],
+    hideDesignGrid: true,
     about: [
       "У Pena Pack уже был основной презентационный сайт — он знакомил с компанией и услугой, но не позволял оформить покупку. Нужно было разработать отдельный сервис с оформлением заказа и доставки, а также личный кабинет для программы лояльности Pena Pack Club.",
       "Дизайн должен был получиться стильным и визуально приятным, а структура сайта — интуитивно понятной и простой.",
