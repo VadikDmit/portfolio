@@ -229,6 +229,8 @@ export const projects: Project[] = [
     figmaUrl:
       "https://www.figma.com/design/TTF6pdXdCrnbgkOjYjjW3x/Pena-Pack?node-id=3-90&t=So2H73ymuUfxJRcb-1",
     siteUrl: "https://pena.beer/",
+    previewVideo: "/projects/project-04/preview.mp4",
+    previewVideoBackground: "/projects/project-04/preview-bg.jpg",
     description: "Сервис для заказа и доставки крафтового пива Pena Pack",
     role: [
       "Конкурентный анализ",
