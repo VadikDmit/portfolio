@@ -32,6 +32,12 @@ export type Project = {
    *  this background image, instead of being cropped to fill the square. */
   previewVideoBackground?: string;
   images: string[];
+  /** Optional — replaces the "mobile" slot in the generic Design section with a video, shown
+   *  at its own aspect ratio (contain) over a background — either an image (`designVideoBackground`)
+   *  or, when no image is needed, a flat CSS color (`designVideoBackgroundColor`). */
+  designVideo?: string;
+  designVideoBackground?: string;
+  designVideoBackgroundColor?: string;
   about: string[];
   /** Optional — only projects with more than one user type render this section. */
   audiences?: Audience[];
@@ -182,7 +188,9 @@ export const projects: Project[] = [
     cover: "",
     previewVideo: "/projects/project-03/preview.mp4",
     previewVideoBackground: "/projects/project-03/preview-bg.jpg",
-    images: ["", ""],
+    images: ["/projects/project-03/design-desktop.jpg", "", "/projects/project-03/design-detail.jpg"],
+    designVideo: "/projects/project-03/design-mobile.mp4",
+    designVideoBackgroundColor: "#EAEAE1",
     about: [
       "Gaya — образовательный центр для стоматологов в Бразилии. У заказчика уже был готовый брендбук и страница в Instagram — задача заключалась в том, чтобы сделать приятный, стильный сайт, полностью соответствующий этому брендбуку.",
       "Позже для сайта спроектировали админ-панель — сейчас она на стадии разработки, дизайн выполнен в Figma.",

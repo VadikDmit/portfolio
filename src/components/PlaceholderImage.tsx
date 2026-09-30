@@ -21,6 +21,9 @@ type PlaceholderImageProps = {
    *  recording). Instead of cropping the video to fill, it's shown at its own aspect ratio,
    *  inset with a shadow over this background image. */
   videoBackground?: string;
+  /** Optional alternative to `videoBackground` — a flat CSS color, for clips that don't need a
+   *  background image (e.g. a plain UI screen recording). */
+  videoBackgroundColor?: string;
 };
 
 export default function PlaceholderImage({
@@ -30,21 +33,26 @@ export default function PlaceholderImage({
   src,
   video,
   videoBackground,
+  videoBackgroundColor,
 }: PlaceholderImageProps) {
-  if (video && videoBackground) {
+  if (video && (videoBackground || videoBackgroundColor)) {
     return (
       <div
         className={className}
         style={{ width: "100%", height: "100%", position: "relative", overflow: "hidden" }}
       >
-        <Image
-          src={videoBackground}
-          alt={label ?? ""}
-          fill
-          sizes="(max-width: 768px) 100vw, 1080px"
-          loading="eager"
-          className="object-cover"
-        />
+        {videoBackground ? (
+          <Image
+            src={videoBackground}
+            alt={label ?? ""}
+            fill
+            sizes="(max-width: 768px) 100vw, 1080px"
+            loading="eager"
+            className="object-cover"
+          />
+        ) : (
+          <div aria-hidden style={{ position: "absolute", inset: 0, background: videoBackgroundColor }} />
+        )}
         <video
           src={video}
           muted

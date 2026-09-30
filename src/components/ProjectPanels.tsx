@@ -145,6 +145,9 @@ export default function ProjectPanels({
                 tone={(project.tone + 2) % 6}
                 label={`${project.title} — mobile`}
                 src={project.images[1] || undefined}
+                video={project.designVideo}
+                videoBackground={project.designVideoBackground}
+                videoBackgroundColor={project.designVideoBackgroundColor}
               />
             </div>
             <div className="aspect-[3/4] overflow-hidden rounded-[24px]">
