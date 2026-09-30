@@ -180,6 +180,8 @@ export const projects: Project[] = [
       "Дизайн-ревью",
     ],
     cover: "",
+    previewVideo: "/projects/project-03/preview.mp4",
+    previewVideoBackground: "/projects/project-03/preview-bg.jpg",
     images: ["", ""],
     about: [
       "Gaya — образовательный центр для стоматологов в Бразилии. У заказчика уже был готовый брендбук и страница в Instagram — задача заключалась в том, чтобы сделать приятный, стильный сайт, полностью соответствующий этому брендбуку.",
