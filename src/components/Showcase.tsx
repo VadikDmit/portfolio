@@ -122,7 +122,7 @@ function Flyer({ flight, onDone }: { flight: Flight; onDone: () => void }) {
       <PlaceholderImage
         tone={project.tone}
         label={project.title}
-        src={project.previewVideoBackground || project.cover || undefined}
+        src={(project.previewVideo && project.previewVideoBackground) || project.cover || undefined}
       />
     </div>
   );
