@@ -329,6 +329,8 @@ export const projects: Project[] = [
     figmaUrl:
       "https://www.figma.com/design/yyzzdsLKdB2fMPA6tXfwJO/%D0%A3%D0%B3%D0%BE%D0%BB%D0%BE%D0%BA?node-id=1-279&t=UZGHAmC1yVB26SdX-1",
     siteUrl: "https://ugolok-design.ru/",
+    previewVideo: "/projects/project-06/preview.mp4",
+    previewVideoBackground: "/projects/project-06/preview-bg.jpg",
     description: "Сайт и квиз для дизайн-бюро интерьеров «Уголок»",
     role: [
       "Брифинг с продуктоунером",
