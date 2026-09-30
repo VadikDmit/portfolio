@@ -281,6 +281,8 @@ export const projects: Project[] = [
     listCategory: "Финтех-платформа",
     year: "2025",
     siteUrl: "https://bank-future.com/",
+    previewVideo: "/projects/project-05/preview.mp4",
+    previewVideoBackground: "/projects/project-05/preview-bg.jpg",
     description: "Сайт и сервис ПФП для FinTech/AI-компании BankFuture",
     role: [
       "Составление ТЗ",
