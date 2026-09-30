@@ -126,6 +126,7 @@ export default function ProjectPanels({
           <PlaceholderImage
             tone={(project.tone + 1) % 6}
             label={`${project.title} — process`}
+            src={project.images[0] || undefined}
           />
         </div>
       )}
