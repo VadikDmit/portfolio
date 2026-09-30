@@ -61,7 +61,7 @@ export default function PlaceholderImage({
           autoPlay
           preload="auto"
           aria-hidden
-          className="preview-video absolute top-1/2 left-1/2 h-[82%] w-[82%] -translate-x-1/2 -translate-y-1/2 object-contain"
+          className="preview-video absolute top-1/2 left-1/2 h-[92%] w-[92%] -translate-x-1/2 -translate-y-1/2 object-contain"
           style={{ filter: "drop-shadow(0 16px 40px rgba(0,0,0,0.3))" }}
         />
       </div>
