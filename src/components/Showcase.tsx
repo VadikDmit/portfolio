@@ -593,7 +593,7 @@ export default function Showcase({
         </div>
 
         {/* Close button (desktop): sits in the empty 6th column, follows scroll */}
-        {((project && !opening) || page === "about") && (
+        {project && !opening && (
           <CloseButton
             onClick={close}
             className="hidden md:grid md:col-start-6 md:row-start-1 md:row-span-2 md:self-start md:justify-self-end md:-mr-14 md:sticky md:top-[100px] md:z-10"
