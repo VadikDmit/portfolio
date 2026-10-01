@@ -175,7 +175,7 @@ export const projects: Project[] = [
     title: "GAYA",
     category: "UX/UI Design · Web Design",
     listCategory: "Образовательный центр",
-    year: "2025",
+    year: "2024",
     figmaUrl:
       "https://www.figma.com/design/XAJHzvhEtmAs5G6XBlMGNA/GAYA-RUS?node-id=0-1&t=6D0DpHSXXVDXh0an-1",
     siteUrl: "https://gayadentistry.com.br/",
@@ -228,7 +228,7 @@ export const projects: Project[] = [
     title: "Pena Pack",
     category: "UX/UI Design · Web Design",
     listCategory: "Сервис доставки",
-    year: "2025",
+    year: "2023",
     figmaUrl:
       "https://www.figma.com/design/TTF6pdXdCrnbgkOjYjjW3x/Pena-Pack?node-id=3-90&t=So2H73ymuUfxJRcb-1",
     siteUrl: "https://pena.beer/",
@@ -280,7 +280,7 @@ export const projects: Project[] = [
     title: "BankFuture",
     category: "UX/UI Design · Vibe Coding",
     listCategory: "Финтех-платформа",
-    year: "2025",
+    year: "2026",
     siteUrl: "https://bank-future.com/",
     previewVideo: "/projects/project-05/preview.mp4",
     previewVideoBackground: "/projects/project-05/preview-bg.jpg",
@@ -337,7 +337,7 @@ export const projects: Project[] = [
     title: "Уголок",
     category: "Web Design · Product Design",
     listCategory: "Дизайн-бюро",
-    year: "2024",
+    year: "2025",
     figmaUrl:
       "https://www.figma.com/design/yyzzdsLKdB2fMPA6tXfwJO/%D0%A3%D0%B3%D0%BE%D0%BB%D0%BE%D0%BA?node-id=1-279&t=UZGHAmC1yVB26SdX-1",
     siteUrl: "https://ugolok-design.ru/",

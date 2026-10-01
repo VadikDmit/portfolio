@@ -193,7 +193,7 @@ export default function HomeProjectsList({ projects, onOpen, intro }: HomeProjec
 
                 <span
                   className="hidden sm:block text-[13px] text-right shrink-0 max-w-[200px]"
-                  style={{ color: "var(--color-fg-secondary)" }}
+                  style={{ color: "var(--color-fg)" }}
                 >
                   {project.listCategory ?? project.category}
                 </span>
