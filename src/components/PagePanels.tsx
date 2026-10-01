@@ -8,7 +8,17 @@ const EXPERTISE = [
   "AI-assisted Development",
 ];
 
-const TOOLS = ["Figma", "Claude", "ChatGPT", "Gemini", "Tilda", "HTML / CSS / JavaScript"];
+const TOOLS = [
+  "Figma",
+  "Claude",
+  "Adobe Photoshop",
+  "Adobe Illustrator",
+  "Adobe After Effects",
+  "Tilda",
+  "ChatGPT",
+  "Gemini",
+  "HTML / CSS / JavaScript",
+];
 
 const panel = "rounded-[24px] bg-white p-7 md:p-10";
 const label = "text-[13px] tracking-wide uppercase";
