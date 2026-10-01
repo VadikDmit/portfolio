@@ -30,10 +30,20 @@ export function AboutPanels({ className = "" }: { className?: string }) {
         <h1 className="text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.05] font-medium tracking-tight">
           Вадим Дмитриев
         </h1>
-        <p className="mt-6 text-[clamp(1.1rem,1.6vw,1.375rem)] leading-relaxed">
-          Создаю современные цифровые продукты, сайты и интерфейсы — от UX-концепции и визуального
-          дизайна до готовой реализации.
+        <p className="mt-6 text-[clamp(1.1rem,1.6vw,1.375rem)] font-medium leading-relaxed">
+          От первой идеи и прототипа — до готового сайта.
         </p>
+        <div className="mt-4 space-y-3 text-[clamp(1.1rem,1.6vw,1.375rem)] leading-relaxed">
+          <p>8 лет создаю сайты и цифровые продукты, в которых дизайн работает на задачу.</p>
+          <p>
+            Проектирую интерфейсы, выстраиваю пользовательский опыт и с помощью AI-инструментов
+            довожу дизайн до готовой реализации.
+          </p>
+          <p>
+            Работаю самостоятельно или в команде — подключаюсь как на этапе концепции и дизайна,
+            так и на этапе реализации.
+          </p>
+        </div>
       </div>
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
         <div>
