@@ -114,6 +114,7 @@ export const projects: Project[] = [
     figmaUrl:
       "https://www.figma.com/design/qVPdeDfpr9vs1PKk889Osb/built2measure_Service?node-id=143-295&t=aPOTD7CFRkbf7O8m-1",
     siteUrl: "https://built2measure.com/",
+    previewVideo: "/projects/built2measure/preview.mp4",
     previewVideoBackground: "/projects/built2measure/preview-bg.jpg",
     description: "Сервис для строительных и ремонтных услуг (UK)",
     role: [
