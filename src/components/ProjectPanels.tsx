@@ -43,7 +43,7 @@ export default function ProjectPanels({
         </div>
         <p
           className="mt-5 text-[clamp(1.1rem,1.6vw,1.35rem)] leading-snug"
-          style={{ color: "var(--color-fg-secondary)" }}
+          style={{ color: "var(--color-fg)" }}
         >
           {project.description}
         </p>
