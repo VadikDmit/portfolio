@@ -67,14 +67,6 @@ button:focus-visible {
   outline-offset: 4px;
 }
 
-/* Custom cursor — desktop only, added via JS class on <html> */
-@media (hover: hover) and (pointer: fine) {
-  html.custom-cursor,
-  html.custom-cursor * {
-    cursor: none !important;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
