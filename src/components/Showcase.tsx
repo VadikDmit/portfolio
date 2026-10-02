@@ -239,29 +239,70 @@ function CloseButton({ onClick, className }: { onClick: () => void; className: s
   );
 }
 
-// A quiet "scroll for more" hint beside the opened project's image — a column of dots that
-// fades out once the visitor actually starts scrolling, so it never lingers in the way.
-function ScrollHint() {
-  const [visible, setVisible] = useState(true);
+// A fixed, screen-centred dot rail beside the panels column — like the sticky left title, it
+// stays put while you scroll. One dot tracks whichever panel/card is nearest the screen's
+// vertical centre, so it reads as "you are here" among the project's content blocks.
+function ScrollHint({ panelsRef }: { panelsRef: React.RefObject<HTMLDivElement | null> }) {
+  const [state, setState] = useState<{ left: number; count: number; active: number } | null>(null);
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY < 80);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    let frame = 0;
+
+    const update = () => {
+      frame = 0;
+      const wrap = panelsRef.current;
+      // panelsRef points at the grid cell; its one child is ProjectPanels' own root, whose
+      // direct children are the actual stacked cards (About, Process, Design images, Result…).
+      const sections = wrap?.firstElementChild
+        ? (Array.from(wrap.firstElementChild.children) as HTMLElement[])
+        : [];
+      if (!wrap || sections.length < 2 || window.innerWidth < 1024) {
+        setState(null);
+        return;
+      }
+      const viewportCenter = window.innerHeight / 2;
+      let active = 0;
+      let best = Infinity;
+      sections.forEach((el, i) => {
+        const r = el.getBoundingClientRect();
+        const dist = Math.abs(r.top + r.height / 2 - viewportCenter);
+        if (dist < best) {
+          best = dist;
+          active = i;
+        }
+      });
+      setState({ left: wrap.getBoundingClientRect().right + 32, count: sections.length, active });
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    return () => {
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [panelsRef]);
+
+  if (!state) return null;
 
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute top-1/2 left-full hidden -translate-y-1/2 flex-col items-center gap-3 pl-6 transition-opacity duration-500 lg:flex"
-      style={{ opacity: visible ? 1 : 0 }}
+      className="pointer-events-none fixed top-1/2 hidden -translate-y-1/2 flex-col items-center gap-3 lg:flex"
+      style={{ left: state.left }}
     >
-      {[0.55, 0.4, 0.25, 0.12].map((opacity, i) => (
+      {Array.from({ length: state.count }).map((_, i) => (
         <span
           key={i}
-          className="h-[6px] w-[6px] rounded-full"
-          style={{ background: "var(--color-fg)", opacity }}
+          className="h-[6px] w-[6px] rounded-full transition-colors duration-300"
+          style={{
+            background:
+              i === state.active ? "var(--color-fg-secondary)" : "var(--color-fg-tertiary)",
+          }}
         />
       ))}
     </div>
@@ -302,6 +343,7 @@ export default function Showcase({
   const [flight, setFlight] = useState<Flight | null>(null);
   const slugRef = useRef<string | null>(initialSlug ?? null);
   const frameRef = useRef<HTMLDivElement>(null);
+  const panelsWrapRef = useRef<HTMLDivElement>(null);
   const savedScrollRef = useRef(0);
 
   const project = slug ? getProjectBySlug(slug) : undefined;
@@ -660,23 +702,20 @@ export default function Showcase({
             )}
 
             {project && (
-              <div className="relative">
-                <div
-                  ref={frameRef}
-                  className="relative aspect-square overflow-hidden rounded-[24px]"
-                  style={{ visibility: opening ? "hidden" : "visible" }}
-                >
-                  <div className="absolute inset-0">
-                    <PlaceholderImage
-                      tone={project.tone}
-                      label={project.title}
-                      src={project.cover || undefined}
-                      video={project.previewVideo}
-                      videoBackground={project.previewVideoBackground}
-                    />
-                  </div>
+              <div
+                ref={frameRef}
+                className="relative aspect-square overflow-hidden rounded-[24px]"
+                style={{ visibility: opening ? "hidden" : "visible" }}
+              >
+                <div className="absolute inset-0">
+                  <PlaceholderImage
+                    tone={project.tone}
+                    label={project.title}
+                    src={project.cover || undefined}
+                    video={project.previewVideo}
+                    videoBackground={project.previewVideoBackground}
+                  />
                 </div>
-                {!opening && <ScrollHint />}
               </div>
             )}
           </div>
@@ -684,10 +723,14 @@ export default function Showcase({
 
         {/* Right: project content panels */}
         {project && (
-          <div className="max-md:order-3 md:col-span-6 md:col-start-7 md:row-start-2">
+          <div
+            ref={panelsWrapRef}
+            className="max-md:order-3 md:col-span-6 md:col-start-7 md:row-start-2"
+          >
             <ProjectPanels project={project} onNext={openNext} />
           </div>
         )}
+        {project && !opening && <ScrollHint panelsRef={panelsWrapRef} />}
       </div>
 
       {/* Mobile: tiles pinned to the bottom, close button on the right */}
