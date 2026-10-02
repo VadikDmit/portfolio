@@ -240,10 +240,12 @@ function CloseButton({ onClick, className }: { onClick: () => void; className: s
 }
 
 // A fixed, screen-centred dot rail beside the panels column — like the sticky left title, it
-// stays put while you scroll. One dot tracks whichever panel/card is nearest the screen's
-// vertical centre, so it reads as "you are here" among the project's content blocks.
+// stays put while you scroll. Always 4 dots, marking how far through the panels column the
+// screen's vertical centre currently is (not tied to the number of cards).
+const HINT_DOTS = 4;
+
 function ScrollHint({ panelsRef }: { panelsRef: React.RefObject<HTMLDivElement | null> }) {
-  const [state, setState] = useState<{ left: number; count: number; active: number } | null>(null);
+  const [state, setState] = useState<{ left: number; active: number } | null>(null);
 
   useEffect(() => {
     let frame = 0;
@@ -251,27 +253,15 @@ function ScrollHint({ panelsRef }: { panelsRef: React.RefObject<HTMLDivElement |
     const update = () => {
       frame = 0;
       const wrap = panelsRef.current;
-      // panelsRef points at the grid cell; its one child is ProjectPanels' own root, whose
-      // direct children are the actual stacked cards (About, Process, Design images, Result…).
-      const sections = wrap?.firstElementChild
-        ? (Array.from(wrap.firstElementChild.children) as HTMLElement[])
-        : [];
-      if (!wrap || sections.length < 2 || window.innerWidth < 1024) {
+      if (!wrap || window.innerWidth < 1024) {
         setState(null);
         return;
       }
+      const rect = wrap.getBoundingClientRect();
       const viewportCenter = window.innerHeight / 2;
-      let active = 0;
-      let best = Infinity;
-      sections.forEach((el, i) => {
-        const r = el.getBoundingClientRect();
-        const dist = Math.abs(r.top + r.height / 2 - viewportCenter);
-        if (dist < best) {
-          best = dist;
-          active = i;
-        }
-      });
-      setState({ left: wrap.getBoundingClientRect().right + 32, count: sections.length, active });
+      const progress = rect.height > 0 ? (viewportCenter - rect.top) / rect.height : 0;
+      const active = Math.min(HINT_DOTS - 1, Math.max(0, Math.floor(progress * HINT_DOTS)));
+      setState({ left: rect.right + 32, active });
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -295,13 +285,12 @@ function ScrollHint({ panelsRef }: { panelsRef: React.RefObject<HTMLDivElement |
       className="pointer-events-none fixed top-1/2 hidden -translate-y-1/2 flex-col items-center gap-3 lg:flex"
       style={{ left: state.left }}
     >
-      {Array.from({ length: state.count }).map((_, i) => (
+      {Array.from({ length: HINT_DOTS }).map((_, i) => (
         <span
           key={i}
-          className="h-[6px] w-[6px] rounded-full transition-colors duration-300"
+          className="h-[4.8px] w-[4.8px] rounded-full transition-colors duration-300"
           style={{
-            background:
-              i === state.active ? "var(--color-fg-secondary)" : "var(--color-fg-tertiary)",
+            background: i === state.active ? "var(--color-fg)" : "var(--color-fg-tertiary)",
           }}
         />
       ))}
