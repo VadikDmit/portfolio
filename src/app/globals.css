@@ -54,6 +54,11 @@ a {
 button {
   font: inherit;
   color: inherit;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
 }
 
 .tabular-nums {
