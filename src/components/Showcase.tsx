@@ -239,6 +239,35 @@ function CloseButton({ onClick, className }: { onClick: () => void; className: s
   );
 }
 
+// A quiet "scroll for more" hint beside the opened project's image — a column of dots that
+// fades out once the visitor actually starts scrolling, so it never lingers in the way.
+function ScrollHint() {
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY < 80);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute top-1/2 left-full hidden -translate-y-1/2 flex-col items-center gap-3 pl-6 transition-opacity duration-500 lg:flex"
+      style={{ opacity: visible ? 1 : 0 }}
+    >
+      {[0.55, 0.4, 0.25, 0.12].map((opacity, i) => (
+        <span
+          key={i}
+          className="h-[6px] w-[6px] rounded-full"
+          style={{ background: "var(--color-fg)", opacity }}
+        />
+      ))}
+    </div>
+  );
+}
+
 export default function Showcase({
   initialSlug,
   initialPage,
@@ -631,20 +660,23 @@ export default function Showcase({
             )}
 
             {project && (
-              <div
-                ref={frameRef}
-                className="relative aspect-square overflow-hidden rounded-[24px]"
-                style={{ visibility: opening ? "hidden" : "visible" }}
-              >
-                <div className="absolute inset-0">
-                  <PlaceholderImage
-                    tone={project.tone}
-                    label={project.title}
-                    src={project.cover || undefined}
-                    video={project.previewVideo}
-                    videoBackground={project.previewVideoBackground}
-                  />
+              <div className="relative">
+                <div
+                  ref={frameRef}
+                  className="relative aspect-square overflow-hidden rounded-[24px]"
+                  style={{ visibility: opening ? "hidden" : "visible" }}
+                >
+                  <div className="absolute inset-0">
+                    <PlaceholderImage
+                      tone={project.tone}
+                      label={project.title}
+                      src={project.cover || undefined}
+                      video={project.previewVideo}
+                      videoBackground={project.previewVideoBackground}
+                    />
+                  </div>
                 </div>
+                {!opening && <ScrollHint />}
               </div>
             )}
           </div>
