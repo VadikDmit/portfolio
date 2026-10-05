@@ -127,6 +127,7 @@ export default function ProjectPanels({
             tone={(project.tone + 1) % 6}
             label={`${project.title} — process`}
             src={project.images[0] || undefined}
+            loading="lazy"
           />
         </div>
       )}
@@ -138,6 +139,7 @@ export default function ProjectPanels({
               tone={(project.tone + 1) % 6}
               label={`${project.title} — desktop`}
               src={project.images[0] || undefined}
+              loading="lazy"
             />
           </div>
           {!project.hideDesignGrid && (
@@ -150,6 +152,7 @@ export default function ProjectPanels({
                   video={project.designVideo}
                   videoBackground={project.designVideoBackground}
                   videoBackgroundColor={project.designVideoBackgroundColor}
+                  loading="lazy"
                 />
               </div>
               <div className="aspect-[3/4] overflow-hidden rounded-[24px]">
@@ -157,6 +160,7 @@ export default function ProjectPanels({
                   tone={(project.tone + 3) % 6}
                   label={`${project.title} — UI detail`}
                   src={project.images[2] || undefined}
+                  loading="lazy"
                 />
               </div>
             </div>

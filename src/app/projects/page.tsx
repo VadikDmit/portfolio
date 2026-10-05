@@ -6,6 +6,8 @@ import PlaceholderImage from "@/components/PlaceholderImage";
 export const metadata: Metadata = {
   title: "Projects",
   description: "Избранные проекты Вадима Дмитриева — UX/UI дизайн и Vibe Coding.",
+  // Legacy listing, not linked from the site — projects are opened from the home page.
+  robots: { index: false, follow: true },
 };
 
 export default function ProjectsPage() {

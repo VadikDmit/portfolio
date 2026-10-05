@@ -27,9 +27,9 @@ export function AboutPanels({ className = "" }: { className?: string }) {
   return (
     <div className={`${panel} flex flex-col justify-center gap-10 ${className}`}>
       <div>
-        <h1 className="text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.05] font-medium tracking-tight">
+        <h2 className="text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.05] font-medium tracking-tight">
           Вадим Дмитриев
-        </h1>
+        </h2>
         <p className="mt-6 text-[clamp(1.1rem,1.6vw,1.375rem)] font-medium leading-relaxed">
           От первой идеи и прототипа — до готового сайта.
         </p>
@@ -47,9 +47,9 @@ export function AboutPanels({ className = "" }: { className?: string }) {
       </div>
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
         <div>
-          <h2 className={`${label} mb-6`} style={{ color: "var(--color-fg-tertiary)" }}>
+          <h3 className={`${label} mb-6`} style={{ color: "var(--color-fg-tertiary)" }}>
             Expertise
-          </h2>
+          </h3>
           <ul className="space-y-3">
             {EXPERTISE.map((item) => (
               <li key={item} className="text-[16px]">
@@ -59,9 +59,9 @@ export function AboutPanels({ className = "" }: { className?: string }) {
           </ul>
         </div>
         <div>
-          <h2 className={`${label} mb-6`} style={{ color: "var(--color-fg-tertiary)" }}>
+          <h3 className={`${label} mb-6`} style={{ color: "var(--color-fg-tertiary)" }}>
             Tools
-          </h2>
+          </h3>
           <ul className="space-y-3">
             {TOOLS.map((item) => (
               <li key={item} className="text-[16px]">

@@ -21,6 +21,10 @@ export type Project = {
   /** Optional — link to the live site. "#" means a stub. */
   siteUrl?: string;
   description: string;
+  /** Page <title> and Open Graph title. */
+  seoTitle: string;
+  /** Meta / Open Graph description. */
+  seoDescription: string;
   role: string[];
   cover: string;
   /** Optional — looping preview clip (muted, no controls). Used in the hover preview on the
@@ -65,6 +69,9 @@ export const projects: Project[] = [
       "https://www.figma.com/design/nGwVPkYQQRF35j36xQ4p21/%D0%A3%D0%B4%D0%BC%D0%A2%D0%B5%D0%B0%D1%82%D1%80?node-id=20-57&t=fC4SnB9GyWp0nDMv-1",
     siteUrl: "https://udmteatr.ru/ru",
     description: "Редизайн сайта государственного национального театра Удмуртской Республики",
+    seoTitle: "Национальный театр УР — UX/UI и Web Design | Вадим Дмитриев",
+    seoDescription:
+      "Редизайн сайта Национального театра Удмуртской Республики: UX/UI дизайн, афиша и карточки спектаклей, адаптивная версия и версия для слабовидящих.",
     cover: "/projects/udmteatr/cover.png",
     previewVideo: "/projects/udmteatr/preview.mp4",
     previewVideoBackground: "/projects/udmteatr/preview-bg.png",
@@ -117,6 +124,9 @@ export const projects: Project[] = [
     previewVideo: "/projects/built2measure/preview.mp4",
     previewVideoBackground: "/projects/built2measure/preview-bg.jpg",
     description: "Сервис для строительных и ремонтных услуг (UK)",
+    seoTitle: "Built2Measure — UX/UI и Product Design | Вадим Дмитриев",
+    seoDescription:
+      "UX/UI и Product Design проекта Built2Measure: исследование, пользовательские сценарии, интерфейсы и адаптивный дизайн.",
     role: [
       "UX research",
       "Составление ТЗ",
@@ -180,6 +190,9 @@ export const projects: Project[] = [
       "https://www.figma.com/design/XAJHzvhEtmAs5G6XBlMGNA/GAYA-RUS?node-id=0-1&t=6D0DpHSXXVDXh0an-1",
     siteUrl: "https://gayadentistry.com.br/",
     description: "Образовательный центр для стоматологов",
+    seoTitle: "GAYA — UX/UI и Web Design | Вадим Дмитриев",
+    seoDescription:
+      "UX/UI и Web Design сайта образовательного центра для стоматологов GAYA: прототип, дизайн по брендбуку, передача в разработку и дизайн админ-панели.",
     role: [
       "Брифинг",
       "Конкурентный анализ",
@@ -235,6 +248,9 @@ export const projects: Project[] = [
     previewVideo: "/projects/project-04/preview.mp4",
     previewVideoBackground: "/projects/project-04/preview-bg.jpg",
     description: "Сервис для заказа и доставки крафтового пива Pena Pack",
+    seoTitle: "Pena Pack — UX/UI и Web Design | Вадим Дмитриев",
+    seoDescription:
+      "UX/UI дизайн сервиса заказа и доставки крафтового пива Pena Pack: сайт с оформлением заказа, личный кабинет, квиз и баннеры.",
     role: [
       "Конкурентный анализ",
       "Поиск референсов",
@@ -285,6 +301,9 @@ export const projects: Project[] = [
     previewVideo: "/projects/project-05/preview.mp4",
     previewVideoBackground: "/projects/project-05/preview-bg.jpg",
     description: "Сайт и сервис ПФП для FinTech/AI-компании BankFuture",
+    seoTitle: "BankFuture — UX/UI дизайн и Vibe Coding | Вадим Дмитриев",
+    seoDescription:
+      "UX/UI дизайн и разработка цифровых решений для BankFuture. UX/UI Design, Vibe Coding и создание интерфейсов.",
     role: [
       "Составление ТЗ",
       "Копирайтинг",
@@ -344,6 +363,9 @@ export const projects: Project[] = [
     previewVideo: "/projects/project-06/preview.mp4",
     previewVideoBackground: "/projects/project-06/preview-bg.jpg",
     description: "Сайт и квиз для дизайн-бюро интерьеров «Уголок»",
+    seoTitle: "Уголок — Web Design и Product Design | Вадим Дмитриев",
+    seoDescription:
+      "Сайт, квиз и админ-панель для дизайн-бюро интерьеров «Уголок»: прототип, UI-кит, адаптивный дизайн и анимация.",
     role: [
       "Брифинг с продуктоунером",
       "Составление ТЗ",

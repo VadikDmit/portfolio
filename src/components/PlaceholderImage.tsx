@@ -24,6 +24,8 @@ type PlaceholderImageProps = {
   /** Optional alternative to `videoBackground` — a flat CSS color, for clips that don't need a
    *  background image (e.g. a plain UI screen recording). */
   videoBackgroundColor?: string;
+  /** Use "lazy" for images that start below the first screen. */
+  loading?: "eager" | "lazy";
 };
 
 export default function PlaceholderImage({
@@ -34,6 +36,7 @@ export default function PlaceholderImage({
   video,
   videoBackground,
   videoBackgroundColor,
+  loading = "eager",
 }: PlaceholderImageProps) {
   if (video && (videoBackground || videoBackgroundColor)) {
     return (
@@ -47,7 +50,7 @@ export default function PlaceholderImage({
             alt={label ?? ""}
             fill
             sizes="(max-width: 768px) 100vw, 1080px"
-            loading="eager"
+            loading={loading}
             className="object-cover"
           />
         ) : (
@@ -80,7 +83,7 @@ export default function PlaceholderImage({
             alt={label ?? ""}
             fill
             sizes="(max-width: 768px) 100vw, 1080px"
-            loading="eager"
+            loading={loading}
             className="object-cover"
           />
         )}
@@ -109,7 +112,7 @@ export default function PlaceholderImage({
           alt={label ?? ""}
           fill
           sizes="(max-width: 768px) 100vw, 640px"
-          loading="eager"
+          loading={loading}
           className="object-cover"
         />
       </div>

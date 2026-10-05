@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProjectBySlug, projects } from "@/lib/projects";
 import Showcase from "@/components/Showcase";
+import { PERSON, SITE_URL, jsonLd, ogImageFor, pageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
@@ -16,10 +17,12 @@ export async function generateMetadata({
   const project = getProjectBySlug(slug);
   if (!project) return {};
 
-  return {
-    title: project.title,
-    description: project.description,
-  };
+  return pageMetadata({
+    title: project.seoTitle,
+    description: project.seoDescription,
+    path: `/projects/${project.slug}`,
+    images: ogImageFor(`${project.slug}.jpg`, `${project.title} — ${project.category}`),
+  });
 }
 
 export default async function ProjectPage({
@@ -28,7 +31,25 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  if (!getProjectBySlug(slug)) notFound();
+  const project = getProjectBySlug(slug);
+  if (!project) notFound();
 
-  return <Showcase initialSlug={slug} />;
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.title,
+    description: project.seoDescription,
+    url: `${SITE_URL}/projects/${project.slug}`,
+    image: `${SITE_URL}/og/${project.slug}.jpg`,
+    dateCreated: project.year,
+    inLanguage: "ru",
+    creator: PERSON,
+  };
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(structuredData) }} />
+      <Showcase initialSlug={slug} />
+    </>
+  );
 }

@@ -1,18 +1,11 @@
 import type { MetadataRoute } from "next";
 import { projects } from "@/lib/projects";
-
-const siteUrl = "https://vadimdmitriev.com";
+import { SITE_URL } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/projects", "/about", "/contact"].map((path) => ({
-    url: `${siteUrl}${path}`,
-    lastModified: new Date(),
-  }));
-
-  const projectRoutes = projects.map((project) => ({
-    url: `${siteUrl}/projects/${project.slug}`,
-    lastModified: new Date(),
-  }));
-
-  return [...staticRoutes, ...projectRoutes];
+  return [
+    { url: `${SITE_URL}/` },
+    { url: `${SITE_URL}/about` },
+    ...projects.map((project) => ({ url: `${SITE_URL}/projects/${project.slug}` })),
+  ];
 }
