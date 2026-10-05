@@ -180,7 +180,7 @@ export const projects: Project[] = [
     tone: 1,
   },
   {
-    slug: "project-03",
+    slug: "gaya",
     number: "03",
     title: "GAYA",
     category: "UX/UI Design · Web Design",
@@ -236,7 +236,7 @@ export const projects: Project[] = [
     tone: 2,
   },
   {
-    slug: "project-04",
+    slug: "pena-pack",
     number: "04",
     title: "Pena Pack",
     category: "UX/UI Design · Web Design",
@@ -291,7 +291,7 @@ export const projects: Project[] = [
     tone: 3,
   },
   {
-    slug: "project-05",
+    slug: "bankfuture",
     number: "05",
     title: "BankFuture",
     category: "UX/UI Design · Vibe Coding",
@@ -351,7 +351,7 @@ export const projects: Project[] = [
     tone: 4,
   },
   {
-    slug: "project-06",
+    slug: "ugolok",
     number: "06",
     title: "Уголок",
     category: "Web Design · Product Design",
